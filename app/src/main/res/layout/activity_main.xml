@@ -86,21 +86,6 @@
         app:strokeColor="#80397676"
         app:strokeWidth="1sp" />
 
-    <Button
-        android:id="@+id/btnsignup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="#00FFFFFF"
-        android:fontFamily="sans-serif-smallcaps"
-        android:text="NO TENGO CUENTA"
-        android:textColor="#80D3D3D3"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.05"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <TextView
         android:id="@+id/loginsignal"
         android:layout_width="wrap_content"

@@ -3,13 +3,13 @@ plugins {
 }
 
 android {
-    namespace = "com.example.proyectopenka"
+    namespace = "cl.lacteada.abstergo"
     compileSdk {
         version = release(37)
     }
 
     defaultConfig {
-        applicationId = "com.example.proyectopenka"
+        applicationId = "cl.lacteada.abstergo"
         minSdk = 24
         targetSdk = 37
         versionCode = 1
