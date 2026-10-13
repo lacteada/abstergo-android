@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ConfirmationCode">
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="259dp"
+        android:layout_height="195dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo" />
+
+    <Button
+        android:id="@+id/btnbackconfirmation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#26960000"
+        android:text="Volver"
+        android:textColor="#CCD3D3D3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="#80397676" />
+
+    <TextView
+        android:id="@+id/titleconfirmation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:fontFamily="sans-serif-black"
+        android:text="Verificacion"
+        android:textAlignment="center"
+        android:textColor="#A8A6A6"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+
+    <Button
+        android:id="@+id/btnverifycode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="80dp"
+        android:backgroundTint="#26960000"
+        android:fontFamily="sans-serif"
+        android:text="Verificar"
+        android:textColor="#CCD3D3D3"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:strokeColor="#80397676" />
+
+    <LinearLayout
+        android:id="@+id/codeContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/btnverifycode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <EditText
+            android:id="@+id/digit1"
+            android:layout_width="48dp"
+            android:layout_height="56dp"
+            android:layout_marginEnd="6dp"
+            android:backgroundTint="#80D3D3D3"
+            android:fontFamily="monospace"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textColor="#CCD3D3D3"
+            android:textSize="22sp" />
+
+        <EditText
+            android:id="@+id/digit2"
+            android:layout_width="48dp"
+            android:layout_height="56dp"
+            android:layout_marginEnd="6dp"
+            android:backgroundTint="#80D3D3D3"
+            android:fontFamily="monospace"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textColor="#CCD3D3D3"
+            android:textSize="22sp" />
+
+        <EditText
+            android:id="@+id/digit3"
+            android:layout_width="48dp"
+            android:layout_height="56dp"
+            android:layout_marginEnd="6dp"
+            android:backgroundTint="#80D3D3D3"
+            android:fontFamily="monospace"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textColor="#CCD3D3D3"
+            android:textSize="22sp" />
+
+        <EditText
+            android:id="@+id/digit4"
+            android:layout_width="48dp"
+            android:layout_height="56dp"
+            android:layout_marginEnd="6dp"
+            android:backgroundTint="#80D3D3D3"
+            android:fontFamily="monospace"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textColor="#CCD3D3D3"
+            android:textSize="22sp" />
+
+        <EditText
+            android:id="@+id/digit5"
+            android:layout_width="48dp"
+            android:layout_height="56dp"
+            android:layout_marginEnd="6dp"
+            android:backgroundTint="#80D3D3D3"
+            android:fontFamily="monospace"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textColor="#CCD3D3D3"
+            android:textSize="22sp" />
+
+        <EditText
+            android:id="@+id/digit6"
+            android:layout_width="48dp"
+            android:layout_height="56dp"
+            android:backgroundTint="#80D3D3D3"
+            android:fontFamily="monospace"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textColor="#CCD3D3D3"
+            android:textSize="22sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/subtitleconfirmation"
+        android:layout_width="127dp"
+        android:layout_height="21dp"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="sans-serif"
+        android:text="Revise su correo"
+        android:textColor="#80D3D3D3"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/codeContainer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.14"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

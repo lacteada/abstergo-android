@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Solo en debug: confía en el certificado autofirmado del host de desarrollo. -->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+    <domain-config>
+        <domain includeSubdomains="false">18.209.251.129</domain>
+        <trust-anchors>
+            <certificates src="@raw/abstergo_dev" />
+            <certificates src="system" />
+        </trust-anchors>
+    </domain-config>
+</network-security-config>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center|top"
+    android:orientation="vertical"
+    android:padding="40dp">
+
+    <ImageView
+        android:id="@+id/imageView12"
+        android:layout_width="293dp"
+        android:layout_height="153dp"
+        android:layout_marginTop="40dp"
+        android:cropToPadding="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/menu_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:fontFamily="sans-serif-black"
+        android:paddingTop="40sp"
+        android:text="Menú Principal"
+        android:textAlignment="center"
+        android:textColor="#CCD3D3D3"
+        android:textSize="34sp" />
+
+    <Button
+        android:id="@+id/btn_vecinos"
+        android:layout_width="180sp"
+        android:layout_height="54dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#26960000"
+        android:fontFamily="sans-serif"
+        android:text="Vecinos"
+        android:textColor="#CCD3D3D3"
+        android:textSize="18sp"
+        app:strokeColor="#80397676"
+        app:strokeWidth="1sp" />
+
+    <Button
+        android:id="@+id/btn_usuarios"
+        android:layout_width="180sp"
+        android:layout_height="54dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#26960000"
+        android:fontFamily="sans-serif"
+        android:text="Usuarios"
+        android:textColor="#CCD3D3D3"
+        android:textSize="18sp"
+        app:strokeColor="#80397676"
+        app:strokeWidth="1sp" />
+
+    <Button
+        android:id="@+id/btn_logout"
+        android:layout_width="180sp"
+        android:layout_height="54dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#26960000"
+        android:fontFamily="sans-serif"
+        android:text="Cerrar sesión"
+        android:textColor="#CCD3D3D3"
+        android:textSize="18sp"
+        app:strokeColor="#80397676"
+        app:strokeWidth="1sp" />
+
+</LinearLayout>
