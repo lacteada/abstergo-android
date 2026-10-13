@@ -1,5 +1,6 @@
 package com.example.proyectopenka.data
 
+import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -14,6 +15,10 @@ interface ApiService {
 
     @POST("api/v1/auth/refresh/")
     suspend fun refrescar(@Body cuerpo: RefreshRequest): TokenResponse
+
+    /** Versión síncrona, para el Authenticator de OkHttp. */
+    @POST("api/v1/auth/refresh/")
+    fun refrescarSync(@Body cuerpo: RefreshRequest): Call<TokenResponse>
 
     @POST("api/v1/auth/logout/")
     suspend fun cerrarSesion(@Body cuerpo: RefreshRequest)
@@ -59,4 +64,22 @@ interface ApiService {
 
     @DELETE("api/v1/vecinos/{id}/")
     suspend fun eliminarVecino(@Path("id") id: Int)
+
+    @GET("api/v1/tipos-atencion/")
+    suspend fun tiposAtencion(): Pagina<TipoAtencion>
+
+    @GET("api/v1/sub-atenciones/")
+    suspend fun subAtenciones(): Pagina<SubAtencion>
+
+    @GET("api/v1/atenciones/")
+    suspend fun atenciones(): Pagina<Atencion>
+
+    @POST("api/v1/atenciones/")
+    suspend fun crearAtencion(@Body cuerpo: AtencionRequest): Atencion
+
+    @PATCH("api/v1/atenciones/{id}/")
+    suspend fun actualizarAtencion(@Path("id") id: Int, @Body cuerpo: AtencionRequest): Atencion
+
+    @DELETE("api/v1/atenciones/{id}/")
+    suspend fun eliminarAtencion(@Path("id") id: Int)
 }

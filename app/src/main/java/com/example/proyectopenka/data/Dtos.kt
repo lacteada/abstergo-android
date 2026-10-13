@@ -61,3 +61,33 @@ data class VecinoRequest(
     val tipo_gestion: String,
     val estado: String,
 )
+
+data class TipoAtencion(val id: Int, val nombre: String, val descripcion: String?)
+
+data class SubAtencion(val id: Int, val nombre: String, val tipo_atencion: Int)
+
+data class Atencion(
+    val id: Int,
+    val vecino: Int,
+    val tipo_atencion: Int,
+    val sub_atencion: Int?,
+    val delegacion: Int,
+    val funcionario: Int,
+    val fecha: String,
+    val motivo: String,
+    val detalle: String,
+    val estado: String,
+    val canal: String,
+)
+
+data class AtencionRequest(
+    val vecino: Int,
+    val tipo_atencion: Int,
+    val sub_atencion: Int?,
+    val delegacion: Int,
+    val funcionario: Int,
+    val motivo: String,
+    val detalle: String,
+    val estado: String,
+    val canal: String,
+)

@@ -17,6 +17,7 @@ class MainMenu : AppCompatActivity() {
 
     private lateinit var menuTitle: TextView
     private lateinit var btnVecinos: Button
+    private lateinit var btnAtenciones: Button
     private lateinit var btnUsuarios: Button
     private lateinit var btnLogout: Button
 
@@ -32,6 +33,7 @@ class MainMenu : AppCompatActivity() {
 
         menuTitle = findViewById(R.id.menu_title)
         btnVecinos = findViewById(R.id.btn_vecinos)
+        btnAtenciones = findViewById(R.id.btn_atenciones)
         btnUsuarios = findViewById(R.id.btn_usuarios)
         btnLogout = findViewById(R.id.btn_logout)
 
@@ -41,8 +43,12 @@ class MainMenu : AppCompatActivity() {
             startActivity(Intent(this, VecinoCrud::class.java))
         }
 
+        btnAtenciones.setOnClickListener {
+            startActivity(Intent(this, AtencionCrud::class.java))
+        }
+
         btnUsuarios.setOnClickListener {
-            startActivity(Intent(this, UserMenu::class.java))
+            startActivity(Intent(this, UsuarioCrud::class.java))
         }
 
         btnLogout.setOnClickListener { cerrarSesion() }
