@@ -9,97 +9,102 @@
 
     <Button
         android:id="@+id/btnbackcredits"
+        style="@style/Boton.Volver"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="#26960000"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:text="Volver"
-        android:textColor="#CCD3D3D3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/titlecredits"
+        style="@style/Titulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Desarrollador"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:strokeColor="#80397676"
-        app:strokeWidth="1sp" />
+        app:layout_constraintTop_toBottomOf="@+id/btnbackcredits" />
 
-    <!-- Info card -->
+    <ImageView
+        android:id="@+id/imageView10"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_marginTop="24dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titlecredits"
+        app:srcCompat="@drawable/lacto" />
 
     <LinearLayout
         android:id="@+id/cardCredits"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="40dp"
-        android:background="#12FFFFFF"
+        android:background="@color/tarjeta"
         android:orientation="vertical"
-        android:padding="24dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnGithub"
+        android:padding="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView10">
 
         <TextView
             android:id="@+id/txtUsername"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
             android:text="Sebastian Gilberto"
-            android:textColor="#CCD3D3D3"
-            android:textSize="18sp"
+            android:textColor="@color/texto"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txtRol"
-            android:layout_width="wrap_content"
+            style="@style/Pista"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:fontFamily="sans-serif-smallcaps"
+            android:layout_marginTop="8dp"
             android:text="Rol: Full-stack"
-            android:textColor="#80D3D3D3"
-            android:textSize="14sp" />
+            android:textAlignment="viewStart" />
 
         <TextView
             android:id="@+id/txtMail"
-            android:layout_width="wrap_content"
+            style="@style/Pista"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:fontFamily="sans-serif-smallcaps"
+            android:layout_marginTop="4dp"
             android:text="Mail: sebastian.gilberto02@inacapmail.cl"
-            android:textColor="#80D3D3D3"
-            android:textSize="14sp" />
+            android:textAlignment="viewStart" />
 
         <TextView
             android:id="@+id/txtCarrera"
-            android:layout_width="wrap_content"
+            style="@style/Pista"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:fontFamily="sans-serif-smallcaps"
+            android:layout_marginTop="4dp"
             android:text="Ing. Ciberseguridad | INACAP La Serena | P1-C1"
-            android:textColor="#80D3D3D3"
-            android:textSize="14sp" />
+            android:textAlignment="viewStart" />
 
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/imageView10"
-        android:layout_width="180dp"
-        android:layout_height="174dp"
-        android:layout_marginBottom="40dp"
-        app:layout_constraintBottom_toTopOf="@+id/cardCredits"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/lacto" />
-
-    <ImageView
         android:id="@+id/btnGithub"
-        android:layout_width="88dp"
-        android:layout_height="60dp"
-        android:layout_marginBottom="80dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/fondo_boton_plano"
+        android:contentDescription="GitHub"
+        android:padding="8dp"
+        android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardCredits"
         app:srcCompat="@drawable/github" />
-
-    <!-- GitHub link button -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

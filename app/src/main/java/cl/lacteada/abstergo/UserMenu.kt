@@ -22,5 +22,6 @@ class UserMenu : ActividadBase() {
         findViewById<Button>(R.id.btn_list_users).setOnClickListener {
             startActivity(Intent(this, UsuarioCrud::class.java))
         }
+        findViewById<Button>(R.id.btnbackusermenu).setOnClickListener { finish() }
     }
 }

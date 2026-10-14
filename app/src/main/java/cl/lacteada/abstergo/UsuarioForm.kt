@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Spinner
 import android.widget.Switch
 import android.widget.TextView
 import cl.lacteada.abstergo.data.BdLocal
@@ -44,10 +43,6 @@ class UsuarioForm : ActividadBase() {
         emailInput = findViewById(R.id.formUsuarioEmail)
         passwordInput = findViewById(R.id.formUsuarioPassword)
         activoSwitch = findViewById(R.id.formUsuarioActivo)
-
-        // El rol y la delegación no son parte de esta pantalla.
-        findViewById<Spinner>(R.id.formUsuarioRol).visibility = View.GONE
-        findViewById<Spinner>(R.id.formUsuarioDelegacion).visibility = View.GONE
 
         bd = BdLocal(this)
         original = intent.getStringExtra("idLocal")?.let { bd.buscar(it) }

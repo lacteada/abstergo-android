@@ -7,53 +7,45 @@
     android:layout_height="match_parent"
     tools:context=".ConfirmationCode">
 
+    <Button
+        android:id="@+id/btnbackconfirmation"
+        style="@style/Boton.Volver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Volver"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/imageView5"
-        android:layout_width="200dp"
-        android:layout_height="150dp"
+        android:layout_width="140dp"
+        android:layout_height="105dp"
         android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnbackconfirmation"
         app:srcCompat="@drawable/logo" />
-
-    <Button
-        android:id="@+id/btnbackconfirmation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="#26960000"
-        android:text="Volver"
-        android:textColor="#CCD3D3D3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:strokeColor="#80397676" />
 
     <TextView
         android:id="@+id/titleconfirmation"
+        style="@style/Titulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:fontFamily="sans-serif-black"
+        android:layout_marginTop="20dp"
         android:text="Verificación"
-        android:textAlignment="center"
-        android:textColor="#A8A6A6"
-        android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
     <TextView
         android:id="@+id/subtitleconfirmation"
+        style="@style/Pista"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:fontFamily="sans-serif"
         android:text="Revise su correo electrónico"
-        android:textAlignment="center"
-        android:textColor="#80D3D3D3"
-        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleconfirmation" />
@@ -70,79 +62,79 @@
 
         <EditText
             android:id="@+id/digit1"
+            style="@style/Campo"
             android:layout_width="48dp"
-            android:layout_height="56dp"
             android:layout_marginEnd="6dp"
-            android:backgroundTint="#80D3D3D3"
+            android:backgroundTint="@color/borde"
             android:fontFamily="monospace"
             android:gravity="center"
             android:inputType="number"
             android:maxLength="1"
-            android:textColor="#CCD3D3D3"
+            android:textAlignment="center"
             android:textSize="22sp" />
 
         <EditText
             android:id="@+id/digit2"
+            style="@style/Campo"
             android:layout_width="48dp"
-            android:layout_height="56dp"
             android:layout_marginEnd="6dp"
-            android:backgroundTint="#80D3D3D3"
+            android:backgroundTint="@color/borde"
             android:fontFamily="monospace"
             android:gravity="center"
             android:inputType="number"
             android:maxLength="1"
-            android:textColor="#CCD3D3D3"
+            android:textAlignment="center"
             android:textSize="22sp" />
 
         <EditText
             android:id="@+id/digit3"
+            style="@style/Campo"
             android:layout_width="48dp"
-            android:layout_height="56dp"
             android:layout_marginEnd="6dp"
-            android:backgroundTint="#80D3D3D3"
+            android:backgroundTint="@color/borde"
             android:fontFamily="monospace"
             android:gravity="center"
             android:inputType="number"
             android:maxLength="1"
-            android:textColor="#CCD3D3D3"
+            android:textAlignment="center"
             android:textSize="22sp" />
 
         <EditText
             android:id="@+id/digit4"
+            style="@style/Campo"
             android:layout_width="48dp"
-            android:layout_height="56dp"
             android:layout_marginEnd="6dp"
-            android:backgroundTint="#80D3D3D3"
+            android:backgroundTint="@color/borde"
             android:fontFamily="monospace"
             android:gravity="center"
             android:inputType="number"
             android:maxLength="1"
-            android:textColor="#CCD3D3D3"
+            android:textAlignment="center"
             android:textSize="22sp" />
 
         <EditText
             android:id="@+id/digit5"
+            style="@style/Campo"
             android:layout_width="48dp"
-            android:layout_height="56dp"
             android:layout_marginEnd="6dp"
-            android:backgroundTint="#80D3D3D3"
+            android:backgroundTint="@color/borde"
             android:fontFamily="monospace"
             android:gravity="center"
             android:inputType="number"
             android:maxLength="1"
-            android:textColor="#CCD3D3D3"
+            android:textAlignment="center"
             android:textSize="22sp" />
 
         <EditText
             android:id="@+id/digit6"
+            style="@style/Campo"
             android:layout_width="48dp"
-            android:layout_height="56dp"
-            android:backgroundTint="#80D3D3D3"
+            android:backgroundTint="@color/borde"
             android:fontFamily="monospace"
             android:gravity="center"
             android:inputType="number"
             android:maxLength="1"
-            android:textColor="#CCD3D3D3"
+            android:textAlignment="center"
             android:textSize="22sp" />
 
     </LinearLayout>
@@ -160,41 +152,33 @@
 
         <TextView
             android:id="@+id/txtContador"
+            style="@style/Pista"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="12dp"
             android:fontFamily="monospace"
-            android:text="El código vence en 60s"
-            android:textColor="#80D3D3D3"
-            android:textSize="14sp" />
+            android:text="El código vence en 60s" />
 
         <Button
             android:id="@+id/btnReenviar"
+            style="@style/Boton.Texto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="#26960000"
             android:enabled="false"
-            android:text="Reenviar"
-            android:textColor="#CCD3D3D3"
-            android:textSize="14sp"
-            app:strokeColor="#80397676" />
+            android:text="Reenviar" />
     </LinearLayout>
 
     <Button
         android:id="@+id/btnverifycode"
-        android:layout_width="wrap_content"
+        style="@style/Boton"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:layout_marginTop="32dp"
-        android:backgroundTint="#26960000"
-        android:fontFamily="sans-serif"
-        android:paddingStart="40dp"
-        android:paddingEnd="40dp"
         android:text="Verificar"
-        android:textColor="#CCD3D3D3"
-        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/filaContador"
-        app:strokeColor="#80397676" />
+        app:layout_constraintTop_toBottomOf="@+id/filaContador" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
