@@ -82,6 +82,9 @@ class Sensors : ActividadBase() {
         txtAmpolleta = findViewById(R.id.txtUVVal)
         btnBack = findViewById(R.id.btnbacksensors)
 
+        imgLinterna.setImageResource(R.drawable.flashlightoff)
+        imgAmpolleta.setImageResource(R.drawable.bulboff)
+
         camara = getSystemService(Context.CAMERA_SERVICE) as? CameraManager
         idFlash = camara?.cameraIdList?.firstOrNull { tieneFlash(it) }
 
@@ -167,11 +170,11 @@ class Sensors : ActividadBase() {
             linternaEncendida = !linternaEncendida
             camara?.setTorchMode(id, linternaEncendida)
             imgLinterna.setImageResource(
-                if (linternaEncendida) R.drawable.noti else R.drawable.notioff
+                if (linternaEncendida) R.drawable.flashlighton else R.drawable.flashlightoff
             )
         } catch (e: Exception) {
             linternaEncendida = false
-            imgLinterna.setImageResource(R.drawable.notioff)
+            imgLinterna.setImageResource(R.drawable.flashlightoff)
             aviso("No se pudo", "El teléfono no dejó encender la linterna.")
         }
     }
@@ -180,7 +183,7 @@ class Sensors : ActividadBase() {
         // Es solo visual: no enciende la linterna ni controla nada físico.
         ampolletaEncendida = !ampolletaEncendida
         imgAmpolleta.setImageResource(
-            if (ampolletaEncendida) R.drawable.noti else R.drawable.notioff
+            if (ampolletaEncendida) R.drawable.bulbon else R.drawable.bulboff
         )
         txtAmpolleta.text = if (ampolletaEncendida) "Ampolleta encendida" else "Ampolleta apagada"
     }

@@ -82,7 +82,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardLuz"
-        app:srcCompat="@drawable/notioff" />
+        app:srcCompat="@drawable/flashlightoff" />
 
     <LinearLayout
         android:id="@+id/cardLuz"
@@ -116,7 +116,7 @@
             android:layout_width="85dp"
             android:layout_height="103dp"
             android:layout_weight="1"
-            app:srcCompat="@drawable/uv" />
+            app:srcCompat="@drawable/bulboff" />
 
     </LinearLayout>
 
