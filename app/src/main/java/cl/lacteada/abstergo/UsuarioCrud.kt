@@ -3,6 +3,7 @@ package cl.lacteada.abstergo
 import android.content.Intent
 import android.net.ConnectivityManager
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -28,6 +29,7 @@ class UsuarioCrud : ActividadBase() {
     private lateinit var btnBack: Button
     private lateinit var searchInput: EditText
     private lateinit var txtEstado: TextView
+    private lateinit var txtVacio: TextView
     private lateinit var adapter: ListaAdapter<UsuarioLocal>
     private lateinit var bd: BdLocal
 
@@ -41,6 +43,7 @@ class UsuarioCrud : ActividadBase() {
         btnBack = findViewById(R.id.btnbackusuarios)
         searchInput = findViewById(R.id.searchInputUsuarios)
         txtEstado = findViewById(R.id.txtEstadoSync)
+        txtVacio = findViewById(R.id.txtVacio)
 
         bd = BdLocal(this)
 
@@ -99,8 +102,17 @@ class UsuarioCrud : ActividadBase() {
         lifecycleScope.launch {
             val resultado = Sincronizador.sincronizar(this@UsuarioCrud, bd)
             cargar()
-            if (resultado.sincronizados > 0 && resultado.error == null) {
-                aviso(
+            // Si el servidor rechazó el envío, se dice por qué; si no hay red, ya
+            // lo dice la línea de estado y no hace falta un aviso.
+            when {
+                resultado.error != null && resultado.pendientes > 0 && Conectividad.hayRed(this@UsuarioCrud) ->
+                    aviso(
+                        "No se pudo sincronizar",
+                        "Quedan ${resultado.pendientes} cambio(s). ${resultado.error}",
+                        SweetAlertDialog.WARNING_TYPE,
+                    )
+
+                resultado.sincronizados > 0 -> aviso(
                     "Sincronización completada",
                     "${resultado.sincronizados} cambio(s) subido(s) a MySQL.",
                     SweetAlertDialog.SUCCESS_TYPE,
@@ -121,6 +133,13 @@ class UsuarioCrud : ActividadBase() {
             }
         }
         adapter.setDatos(visibles)
+        // Una pantalla en blanco no dice si está vacía o si la búsqueda no encontró.
+        txtVacio.text = if (usuarios.isEmpty()) {
+            "Aún no hay usuarios. Cree el primero con el botón de arriba."
+        } else {
+            "Sin resultados para \"${consulta.trim()}\"."
+        }
+        txtVacio.visibility = if (visibles.isEmpty()) View.VISIBLE else View.GONE
     }
 
     private fun mostrarOpciones(usuario: UsuarioLocal) {

@@ -6,9 +6,10 @@ de [`abstergo`](https://github.com/lacteada/abstergo), que corre en Django.
 ## Qué hace
 
 - Iniciar sesión con el correo y el token JWT.
-- Recuperar la contraseña: código por correo, verificación y contraseña nueva.
-- Listar y mantener **vecinos**, **atenciones** y **usuarios**, según lo que el
-  rol permita.
+- Recuperar la contraseña: código por correo con cuenta regresiva de un minuto, verificación y contraseña nueva.
+- Mantener los **usuarios** —listar, buscar, crear, editar y eliminar— sobre SQLite local, y sincronizarlos con MySQL al recuperar la conexión.
+- Ver las lecturas de los sensores, con linterna y ampolleta.
+- Mostrar los datos del desarrollador.
 
 ## Cómo se compila
 

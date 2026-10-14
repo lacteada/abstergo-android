@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Botón con borde: tiene estado apretado y estado deshabilitado, así el
-     usuario ve cuándo puede tocar y cuándo no. -->
+     usuario ve cuándo puede tocar y cuándo no. El color sale de la paleta. -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_enabled="false">
         <shape android:shape="rectangle">
-            <solid android:color="#0F960000" />
-            <stroke android:width="1dp" android:color="#33D3D3D3" />
+            <solid android:color="@color/boton_fondo_apagado" />
+            <stroke android:width="1dp" android:color="@color/borde" />
             <corners android:radius="6dp" />
         </shape>
     </item>
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
-            <solid android:color="#66960000" />
-            <stroke android:width="1dp" android:color="@color/borde" />
+            <solid android:color="@color/boton_fondo_apretado" />
+            <stroke android:width="1dp" android:color="@color/acento" />
             <corners android:radius="6dp" />
         </shape>
     </item>
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="#26960000" />
+            <solid android:color="@color/boton_fondo" />
             <stroke android:width="1dp" android:color="@color/borde" />
             <corners android:radius="6dp" />
         </shape>

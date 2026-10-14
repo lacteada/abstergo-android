@@ -57,8 +57,8 @@ app/src/main/java/cl/lacteada/abstergo/
 ├── ListaAdapter.kt       # el adapter de los listados
 ├── Permisos.kt           # lo que el rol permite, según /auth/me/
 ├── SesionUI.kt           # volver al login si la sesión se cayó
-├── data/                 # contrato con la API: DTO, servicio y sesión
-└── dominio/              # reglas del negocio: RUT, patrones y catálogos
+├── data/                 # contrato con la API y base local: DTO, servicio, sesión y SQLite
+└── dominio/              # reglas del negocio: RUT y patrones de entrada
 ```
 
 ---

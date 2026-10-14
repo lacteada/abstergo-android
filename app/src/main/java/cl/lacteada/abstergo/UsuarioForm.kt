@@ -52,7 +52,9 @@ class UsuarioForm : ActividadBase() {
             title.text = "Nuevo usuario"
         } else {
             title.text = "Editar usuario"
+            // Al editar no se cambia la contraseña: se oculta el campo y su etiqueta.
             passwordInput.visibility = View.GONE
+            findViewById<TextView>(R.id.labelpassword).visibility = View.GONE
             nombreInput.setText(anterior.nombre)
             apellidoInput.setText(anterior.apellido)
             emailInput.setText(anterior.email)

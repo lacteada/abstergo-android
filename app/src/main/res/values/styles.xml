@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Escala tipográfica de cuatro pasos. Las razones entre pasos quedan en 1.31,
+     1.35 y 1.30: por debajo de 1.3 el ojo no distingue un nivel del siguiente.
+
+     30 título · 23 subtítulo · 17 cuerpo, campo y botón · 13 etiqueta y pista -->
 <resources>
 
-    <!-- Título de pantalla. Antes cada una inventaba su tamaño (34sp, 30sp…). -->
     <style name="Titulo">
         <item name="android:fontFamily">sans-serif-black</item>
         <item name="android:textColor">@color/texto_titulo</item>
@@ -9,32 +12,46 @@
         <item name="android:textAlignment">center</item>
     </style>
 
-    <!-- Texto de apoyo. -->
-    <style name="Pista">
+    <style name="Subtitulo">
         <item name="android:fontFamily">sans-serif</item>
-        <item name="android:textColor">@color/texto_pista</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/texto_titulo</item>
+        <item name="android:textSize">23sp</item>
         <item name="android:textAlignment">center</item>
     </style>
 
-    <!-- Campo de texto. -->
+    <style name="Pista">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@color/texto_pista</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <!-- Etiqueta visible del campo. La pista ya no hace de etiqueta. -->
+    <style name="Etiqueta">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/texto</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
     <style name="Campo" parent="Widget.AppCompat.EditText">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">52dp</item>
         <item name="android:fontFamily">sans-serif</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">17sp</item>
         <item name="android:textColor">@color/texto</item>
         <item name="android:textColorHint">@color/texto_pista</item>
         <item name="android:textAlignment">center</item>
     </style>
 
-    <!-- Botón de acción. -->
     <style name="Boton" parent="Widget.AppCompat.Button.Borderless">
         <item name="android:background">@drawable/fondo_boton</item>
         <item name="android:textColor">@color/texto_boton</item>
         <item name="android:textAllCaps">false</item>
-        <item name="android:fontFamily">sans-serif</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">17sp</item>
         <item name="android:minHeight">56dp</item>
         <item name="android:paddingStart">24dp</item>
         <item name="android:paddingEnd">24dp</item>
@@ -47,7 +64,8 @@
         <item name="android:background">@drawable/fondo_boton_plano</item>
         <item name="android:textColor">@color/texto_pista</item>
         <item name="android:textSize">14sp</item>
-        <item name="android:minHeight">40dp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:minWidth">48dp</item>
         <item name="android:paddingStart">8dp</item>
         <item name="android:paddingEnd">16dp</item>
         <item name="android:paddingTop">8dp</item>
@@ -61,7 +79,7 @@
         <item name="android:background">@drawable/fondo_boton_plano</item>
         <item name="android:textColor">@color/texto_pista</item>
         <item name="android:textSize">14sp</item>
-        <item name="android:minHeight">40dp</item>
+        <item name="android:minHeight">48dp</item>
         <item name="android:paddingStart">12dp</item>
         <item name="android:paddingEnd">12dp</item>
     </style>

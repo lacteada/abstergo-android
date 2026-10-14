@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>abstergo-android - Review Report</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+	<style>
+		body { font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+		.mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+		.report-section { border: 1px solid #222226; background: #0a0a0b; position: relative; }
+		.corner-box { position: absolute; width: 20px; height: 20px; border: 1px solid #222226; background: #000; }
+	</style>
+</head>
+<body class="bg-black text-[#fafafa]">
+	<main class="mx-auto w-full max-w-6xl px-5 py-8 md:px-10 md:py-12">
+		<header class="report-section mb-8 p-6 md:p-8">
+			<div class="corner-box left-0 top-0 -translate-x-1/2 -translate-y-1/2"></div>
+			<div class="corner-box right-0 top-0 translate-x-1/2 -translate-y-1/2"></div>
+			<div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+				<div>
+					<div class="mono mb-2 text-xs tracking-widest text-[#666]">// REVIEW</div>
+					<h1 class="text-4xl font-bold tracking-tight md:text-6xl">abstergo-android</h1>
+					<div class="mono mt-2 text-xs text-[#555]">cl.lacteada.abstergo · Product register · 12 pantallas</div>
+				</div>
+				<div class="mono text-left text-xs text-[#666] md:text-right">
+					<div>COMMANDCODE REPORT</div>
+					<div class="text-[#444]">2026-10-14</div>
+				</div>
+			</div>
+		</header>
+
+		<section class="report-section mb-8 p-6 md:p-8">
+			<div class="corner-box left-0 top-0 -translate-x-1/2 -translate-y-1/2"></div>
+			<div class="corner-box right-0 top-0 translate-x-1/2 -translate-y-1/2"></div>
+			<div class="grid gap-8 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
+				<div>
+					<div class="mono mb-2 text-xs tracking-widest text-[#666]">// OVERALL</div>
+					<div class="text-6xl font-bold tracking-tight md:text-7xl">24</div>
+					<div class="mt-1 text-lg text-[#666]">/ 50</div>
+					<div class="mt-4 inline-flex border border-[#f43f5e]/30 bg-[#f43f5e]/10 px-3 py-1 text-sm text-[#f43f5e]">BLOCK</div>
+				</div>
+				<div>
+					<div class="mono mb-3 text-xs tracking-widest text-[#666]">// TL;DR</div>
+					<p class="text-sm leading-6 text-[#a0a0a0]">La app ya es consistente: paleta, estilos, estados de botón y navegación con flecha. Lo que falta no es cosmético: la interfaz no pone nombre ni etiqueta donde el usuario decide. Catorce campos usan la pista como etiqueta, la linterna y la ampolleta son dos imágenes tocables que no dicen qué son, y el código de verificación son seis casillas sin etiqueta. Además, cuatro pantallas sin desplazamiento dejan el botón principal fuera de alcance con el teclado abierto.</p>
+					<p class="mt-4 text-sm leading-6 text-[#fbbf24]">Acción principal: /design a11y — etiquetas visibles, nombres en los controles y desplazamiento en los formularios.</p>
+				</div>
+			</div>
+		</section>
+
+		<section class="report-section mb-8 p-6 md:p-8">
+			<div class="mono mb-6 text-xs tracking-widest text-[#666]">// HEURISTIC SCORES</div>
+			<div class="overflow-x-auto">
+				<table class="w-full min-w-[720px] border-collapse text-sm">
+					<thead>
+						<tr class="border-b border-[#222226] text-left mono text-xs text-[#666]">
+							<th class="py-3 pr-4 font-normal">#</th>
+							<th class="py-3 pr-4 font-normal">HEURISTIC</th>
+							<th class="py-3 pr-4 font-normal">SCORE</th>
+							<th class="py-3 font-normal">KEY FINDING</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="border-b border-[#1a1a1e]">
+							<td class="py-4 pr-4 text-[#555]">1</td>
+							<td class="py-4 pr-4 text-[#fafafa]">Primera impresión</td>
+							<td class="py-4 pr-4 text-[#fbbf24]">6 / 10</td>
+							<td class="py-4 text-[#a0a0a0]">Se entiende qué es y dónde actuar, pero sin punto de vista: cambiando el logo podría ser cualquier app de gestión</td>
+						</tr>
+						<tr class="border-b border-[#1a1a1e]">
+							<td class="py-4 pr-4 text-[#555]">2</td>
+							<td class="py-4 pr-4 text-[#fafafa]">Jerarquía</td>
+							<td class="py-4 pr-4 text-[#fbbf24]">5 / 10</td>
+							<td class="py-4 text-[#a0a0a0]">Ocho bloques con el mismo peso por pantalla; la prueba de entrecerrar los ojos no revela qué importa</td>
+						</tr>
+						<tr class="border-b border-[#1a1a1e]">
+							<td class="py-4 pr-4 text-[#555]">3</td>
+							<td class="py-4 pr-4 text-[#fafafa]">Voz del color</td>
+							<td class="py-4 pr-4 text-[#f43f5e]">4 / 10</td>
+							<td class="py-4 text-[#a0a0a0]">Relleno rojo al 15%, borde verde azulado al 50% y texto gris: tres familias sin razón, y sin color de estado</td>
+						</tr>
+						<tr class="border-b border-[#1a1a1e]">
+							<td class="py-4 pr-4 text-[#555]">4</td>
+							<td class="py-4 pr-4 text-[#fafafa]">Voz de la tipografía</td>
+							<td class="py-4 pr-4 text-[#fbbf24]">5 / 10</td>
+							<td class="py-4 text-[#a0a0a0]">Una sola familia con seis tamaños que no forman escala: pasos de 1.14 y 1.13 donde hacen falta 1.3</td>
+						</tr>
+						<tr class="border-b border-[#1a1a1e]">
+							<td class="py-4 pr-4 text-[#555]">5</td>
+							<td class="py-4 pr-4 text-[#fafafa]">Sensación de interacción</td>
+							<td class="py-4 pr-4 text-[#f43f5e]">4 / 10</td>
+							<td class="py-4 text-[#a0a0a0]">Sin estado vacío, el fallo de sincronización no se explica y hay controles sin nombre</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
+
+		<section class="report-section mb-8 p-6 md:p-8">
+			<div class="mono mb-6 text-xs tracking-widest text-[#666]">// COGNITIVE LOAD / RISK</div>
+			<div class="grid gap-6 md:grid-cols-2">
+				<div>
+					<div class="mb-3 text-xl font-semibold">Riesgo alto: el usuario decide sin información</div>
+					<ul class="space-y-3 text-sm text-[#a0a0a0]">
+						<li><span class="mono mr-2 text-[#34d399]">PASS</span>Los botones ya tienen estado apretado y deshabilitado</li>
+						<li><span class="mono mr-2 text-[#34d399]">PASS</span>El listado informa si está sin conexión, con pendientes o al día</li>
+						<li><span class="mono mr-2 text-[#34d399]">PASS</span>Eliminar pide confirmación previa</li>
+						<li><span class="mono mr-2 text-[#fbbf24]">WATCH</span>La escala tipográfica no distingue niveles</li>
+						<li><span class="mono mr-2 text-[#fbbf24]">WATCH</span>El splash de 7 segundos se siente largo para uso diario</li>
+						<li><span class="mono mr-2 text-[#ef4444]">FAIL</span>14 campos sin etiqueta: la pista desaparece al escribir</li>
+						<li><span class="mono mr-2 text-[#ef4444]">FAIL</span>Linterna y ampolleta: dos imágenes tocables sin nombre</li>
+						<li><span class="mono mr-2 text-[#ef4444]">FAIL</span>4 pantallas sin desplazamiento: el botón principal queda fuera con el teclado</li>
+					</ul>
+				</div>
+				<div>
+					<div class="mono mb-3 text-xs tracking-widest text-[#666]">// NEXT MODES</div>
+					<div class="flex flex-wrap gap-2">
+						<span class="border border-[#fbbf24] px-3 py-1 text-sm text-[#fbbf24]">/design a11y</span>
+						<span class="border border-[#333] px-3 py-1 text-sm text-[#a0a0a0]">/design recolor</span>
+						<span class="border border-[#333] px-3 py-1 text-sm text-[#a0a0a0]">/design typeset</span>
+						<span class="border border-[#333] px-3 py-1 text-sm text-[#a0a0a0]">/design surface</span>
+						<span class="border border-[#333] px-3 py-1 text-sm text-[#a0a0a0]">/design relayout</span>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="report-section mb-8 p-6 md:p-8">
+			<div class="mono mb-6 text-xs tracking-widest text-[#666]">// WHAT'S WORKING</div>
+			<div class="grid gap-4 md:grid-cols-3">
+				<article class="border border-[#1f1f24] p-4">
+					<h2 class="mb-2 text-sm font-semibold">Una sola fuente por regla</h2>
+					<p class="text-sm leading-6 text-[#a0a0a0]">`colors.xml` y `styles.xml` gobiernan las doce pantallas. Cambiar el borde de los botones es un archivo, no diez.</p>
+				</article>
+				<article class="border border-[#1f1f24] p-4">
+					<h2 class="mb-2 text-sm font-semibold">Estados reales</h2>
+					<p class="text-sm leading-6 text-[#a0a0a0]">El botón Reenviar apagado se ve apagado, y el apretado se nota. Antes el borde ni se dibujaba y los dos estados eran idénticos.</p>
+				</article>
+				<article class="border border-[#1f1f24] p-4">
+					<h2 class="mb-2 text-sm font-semibold">El flujo de recuperación</h2>
+					<p class="text-sm leading-6 text-[#a0a0a0]">Contador visible, reenvío que se habilita al vencer, y borrado del código completo sin tocar campo por campo.</p>
+				</article>
+			</div>
+		</section>
+
+		<section class="report-section mb-8 p-6 md:p-8">
+			<div class="mono mb-6 text-xs tracking-widest text-[#666]">// PRIORITY ISSUES</div>
+			<div class="space-y-5">
+				<article class="border border-[#2a1d22] bg-[#110b0d] p-5">
+					<div class="mono mb-2 text-xs text-[#f43f5e]">P0 · HIGH · ACCESSIBILITY</div>
+					<h2 class="mb-2 text-lg font-semibold">Dos controles que no dicen qué son</h2>
+					<p class="mb-4 text-sm leading-6 text-[#a0a0a0]">`activity_sensors.xml:139-165` — `imgNoti` e `imgAmpolleta` son `ImageView` tocables, sin `contentDescription` ni rótulo. El usuario adivina cuál es la linterna y el lector de pantalla no anuncia nada.</p>
+					<div class="border-l border-[#fbbf24] pl-4 text-sm leading-6 text-[#fbbf24]">FIX: `contentDescription="Linterna"` y `"Ampolleta"`, más un texto debajo de cada ícono.</div>
+				</article>
+
+				<article class="border border-[#2a1d22] bg-[#110b0d] p-5">
+					<div class="mono mb-2 text-xs text-[#f43f5e]">P0 · HIGH · ACCESSIBILITY</div>
+					<h2 class="mb-2 text-lg font-semibold">La pista hace de etiqueta en 14 campos</h2>
+					<p class="mb-4 text-sm leading-6 text-[#a0a0a0]">`styles.xml:20-30`, el estilo `Campo`. Al escribir, la pista desaparece y el campo queda sin nombre. Si el usuario vuelve a mirar la pantalla, ya no sabe qué campo es cuál.</p>
+					<div class="border-l border-[#fbbf24] pl-4 text-sm leading-6 text-[#fbbf24]">FIX: una etiqueta `TextView` encima de cada campo; la pista queda solo como ejemplo de formato.</div>
+				</article>
+
+				<article class="border border-[#2a1d22] bg-[#110b0d] p-5">
+					<div class="mono mb-2 text-xs text-[#f43f5e]">P0 · HIGH · ACCESSIBILITY</div>
+					<h2 class="mb-2 text-lg font-semibold">Seis casillas sin etiqueta para el código</h2>
+					<p class="mb-4 text-sm leading-6 text-[#a0a0a0]">`activity_confirmation_code.xml:60-135`. Seis `EditText` de un dígito que no se anuncian como el código de verificación.</p>
+					<div class="border-l border-[#fbbf24] pl-4 text-sm leading-6 text-[#fbbf24]">FIX: una etiqueta `labelFor` al primer campo, o un solo campo de seis con `letterSpacing`.</div>
+				</article>
+
+				<article class="border border-[#2a1d22] bg-[#110b0d] p-5">
+					<div class="mono mb-2 text-xs text-[#f43f5e]">P0 · HIGH · RESPONSIVE</div>
+					<h2 class="mb-2 text-lg font-semibold">Cuatro pantallas sin desplazamiento</h2>
+					<p class="mb-4 text-sm leading-6 text-[#a0a0a0]">`activity_main.xml`, `activity_new_password.xml`, `activity_account_recovery.xml` y `activity_account_signup.xml` no tienen `ScrollView`. Con el teclado abierto en una pantalla chica, el botón principal queda fuera de alcance.</p>
+					<div class="border-l border-[#fbbf24] pl-4 text-sm leading-6 text-[#fbbf24]">FIX: envolver el contenido en `ScrollView`, como ya hace `activity_usuario_form.xml:37`.</div>
+				</article>
+
+				<article class="border border-[#1f1f24] p-5">
+					<div class="mono mb-2 text-xs text-[#fbbf24]">P1 · MEDIUM</div>
+					<h2 class="mb-2 text-lg font-semibold">Tres familias de color sin intención</h2>
+					<p class="mb-4 text-sm leading-6 text-[#a0a0a0]">`colors.xml:11-13` — relleno rojo al 15%, borde verde azulado al 50%, texto gris. No hay un color que signifique estado.</p>
+					<div class="border-l border-[#fbbf24] pl-4 text-sm leading-6 text-[#fbbf24]">FIX: un solo tono como acento y un par semántico para éxito y error. `/design recolor`.</div>
+				</article>
+
+				<article class="border border-[#1f1f24] p-5">
+					<div class="mono mb-2 text-xs text-[#fbbf24]">P1 · MEDIUM</div>
+					<h2 class="mb-2 text-lg font-semibold">El listado no tiene estado vacío</h2>
+					<p class="mb-4 text-sm leading-6 text-[#a0a0a0]">`UsuarioCrud.kt` — sin usuarios, o sin resultados de la búsqueda, la pantalla queda en blanco y no distingue los dos casos ni un fallo.</p>
+					<div class="border-l border-[#fbbf24] pl-4 text-sm leading-6 text-[#fbbf24]">FIX: un mensaje para "aún no hay usuarios" y otro para "sin resultados". `/design surface`.</div>
+				</article>
+
+				<article class="border border-[#1f1f24] p-5">
+					<div class="mono mb-2 text-xs text-[#fbbf24]">P1 · MEDIUM</div>
+					<h2 class="mb-2 text-lg font-semibold">El fallo de sincronización no se explica</h2>
+					<p class="mb-4 text-sm leading-6 text-[#a0a0a0]">`UsuarioCrud.kt` — solo se avisa cuando algo se sube bien. Si falla, el usuario ve "pendiente" y nunca sabe qué lo detuvo.</p>
+					<div class="border-l border-[#fbbf24] pl-4 text-sm leading-6 text-[#fbbf24]">FIX: aviso con cuántos quedaron pendientes y por qué.</div>
+				</article>
+
+				<article class="border border-[#1f1f24] p-5">
+					<div class="mono mb-2 text-xs text-[#fbbf24]">P2 · LOW</div>
+					<h2 class="mb-2 text-lg font-semibold">Un layout con colores a mano</h2>
+					<p class="mb-4 text-sm leading-6 text-[#a0a0a0]">`item_lista.xml:7,10` — único archivo que todavía escribe `#12FFFFFF` y `#CCD3D3D3` en vez de usar la paleta.</p>
+					<div class="border-l border-[#fbbf24] pl-4 text-sm leading-6 text-[#fbbf24]">FIX: `@color/tarjeta` y `@color/texto`.</div>
+				</article>
+			</div>
+		</section>
+
+		<section class="report-section mb-8 p-6 md:p-8">
+			<div class="mono mb-6 text-xs tracking-widest text-[#666]">// VERIFICATION</div>
+			<div class="grid gap-6 md:grid-cols-2">
+				<div>
+					<div class="mono mb-3 text-xs tracking-widest text-[#34d399]">CHECKED</div>
+					<ul class="space-y-2 text-sm text-[#a0a0a0]">
+						<li>`./gradlew :app:assembleDebug` → BUILD SUCCESSFUL</li>
+						<li>Colores sueltos en layouts: 1 archivo de 12</li>
+						<li>`contentDescription`: 1 ocurrencia (GitHub); sensores sin ninguna</li>
+						<li>`android:hint`: 14 campos · etiquetas: 0</li>
+						<li>`ScrollView`: 1 layout de 12</li>
+						<li>Lectura de los 12 layouts, `styles.xml`, `colors.xml`, `AGENTS.md`, `README.md`</li>
+					</ul>
+				</div>
+				<div>
+					<div class="mono mb-3 text-xs tracking-widest text-[#fbbf24]">NOT VERIFIED</div>
+					<ul class="space-y-2 text-sm text-[#a0a0a0]">
+						<li>Contraste real sobre el fondo animado, en dispositivo</li>
+						<li>Visibilidad del foco con teclado externo</li>
+						<li>Fuente al 200% y ancho de 320dp</li>
+						<li>El estado vacío y el fallo de sincronización en ejecución</li>
+					</ul>
+				</div>
+			</div>
+		</section>
+
+		<footer class="mono py-8 text-center text-xs tracking-widest text-[#444]">
+			Generated with CommandCode - 2026-10-14
+		</footer>
+	</main>
+</body>
+</html>

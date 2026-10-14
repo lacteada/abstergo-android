@@ -18,82 +18,93 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/titleusuarioform"
-        style="@style/Titulo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Nuevo usuario"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnbackusuarioform" />
-
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="16dp"
+        android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleusuarioform">
+        app:layout_constraintTop_toBottomOf="@+id/btnbackusuarioform">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:paddingBottom="32dp">
+
+            <TextView
+                android:id="@+id/titleusuarioform"
+                style="@style/Titulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp" />
+
+            <TextView
+                style="@style/Etiqueta"
+                android:text="Nombre" />
 
             <EditText
                 android:id="@+id/formUsuarioNombre"
                 style="@style/Campo"
+                android:layout_marginTop="6dp"
                 android:autofillHints="personName"
-                android:hint="Nombre"
                 android:inputType="textPersonName" />
+
+            <TextView
+                style="@style/Etiqueta"
+                android:text="Apellido" />
 
             <EditText
                 android:id="@+id/formUsuarioApellido"
                 style="@style/Campo"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="6dp"
                 android:autofillHints="personName"
-                android:hint="Apellido"
                 android:inputType="textPersonName" />
+
+            <TextView
+                style="@style/Etiqueta"
+                android:text="Correo electrónico" />
 
             <EditText
                 android:id="@+id/formUsuarioEmail"
                 style="@style/Campo"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="6dp"
                 android:autofillHints="emailAddress"
-                android:hint="Correo electrónico"
+                android:hint="nombre@dominio.cl"
                 android:inputType="textEmailAddress" />
 
-            <!-- Solo se ve al agregar: al editar, la pantalla lo oculta. -->
+            <TextView
+                android:id="@+id/labelpassword"
+                style="@style/Etiqueta"
+                android:text="Contraseña" />
+
             <EditText
                 android:id="@+id/formUsuarioPassword"
                 style="@style/Campo"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="6dp"
                 android:autofillHints="password"
-                android:hint="Contraseña"
                 android:inputType="textPassword" />
 
             <Switch
                 android:id="@+id/formUsuarioActivo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="20dp"
                 android:checked="true"
-                android:text="Activo"
-                android:textColor="@color/texto" />
+                android:fontFamily="sans-serif-medium"
+                android:text="Cuenta activa"
+                android:textColor="@color/texto"
+                android:textSize="17sp" />
 
             <Button
                 android:id="@+id/btnsaveusuario"
                 style="@style/Boton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginTop="28dp"
                 android:text="Guardar" />
 
         </LinearLayout>

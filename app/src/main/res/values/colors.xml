@@ -1,15 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- La paleta de la app. Antes estos valores estaban escritos a mano en cada
-     layout; ahora se cambian acá y cambian en todas las pantallas. -->
+     layout; ahora se cambian acá y cambian en todas las pantallas.
+
+     Un solo acento (verde azulado) para toda la superficie, y un par semántico
+     para éxito y error. Antes el relleno era rojo, el borde verde azulado y el
+     texto gris: tres familias distintas sin una razón. -->
 <resources>
     <color name="texto">#FFD3D3D3</color>
     <color name="texto_titulo">#FFA8A6A6</color>
-    <!-- Las pistas suben de opacidad: al 50% no se leían sobre el fondo oscuro. -->
     <color name="texto_pista">#B3D3D3D3</color>
     <color name="texto_boton_apagado">#5C80D3D3</color>
-    <color name="borde">#80397676</color>
+
+    <!-- Acento de la app. -->
+    <color name="acento">#FF4DB6AC</color>
+    <color name="borde">#4D4DB6AC</color>
+    <color name="boton_fondo">#1F4DB6AC</color>
+    <color name="boton_fondo_apretado">#4D4DB6AC</color>
+    <color name="boton_fondo_apagado">#0F4DB6AC</color>
+
+    <!-- Superficies. -->
     <color name="tarjeta">#12FFFFFF</color>
-    <color name="temperatura">#FFFF5722</color>
-    <color name="uv">#FFFFC107</color>
-    <color name="humedad">#FF2196F3</color>
+
+    <!-- Estados. -->
+    <color name="exito">#FF66BB6A</color>
+    <color name="error">#FFEF5350</color>
+
+    <!-- Lecturas de los sensores. -->
+    <color name="temperatura">#FFFF7043</color>
+    <color name="uv">#FFFFCA28</color>
+    <color name="humedad">#FF42A5F5</color>
 </resources>

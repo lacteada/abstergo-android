@@ -39,6 +39,8 @@ class ConfirmationCode : ActividadBase() {
             } else {
                 txtContador.text = "El código venció. Pida uno nuevo."
                 btnReenviar.isEnabled = true
+                // Se anuncia el vencimiento, no cada segundo.
+                txtContador.announceForAccessibility("El código venció")
             }
         }
     }

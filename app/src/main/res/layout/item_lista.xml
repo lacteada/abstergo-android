@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
-    android:background="#12FFFFFF"
-    android:fontFamily="monospace"
+    android:background="@color/tarjeta"
+    android:fontFamily="sans-serif"
     android:padding="16dp"
-    android:textColor="#CCD3D3D3"
+    android:textColor="@color/texto"
     android:textSize="15sp" />
