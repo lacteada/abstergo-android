@@ -69,12 +69,13 @@
                 android:hint="Correo electrónico"
                 android:inputType="textEmailAddress" />
 
+            <!-- Solo se ve al agregar: al editar, la pantalla lo oculta. -->
             <EditText
                 android:id="@+id/formUsuarioPassword"
                 style="@style/Campo"
                 android:layout_marginTop="12dp"
                 android:autofillHints="password"
-                android:hint="Contraseña (vacío = no cambiar)"
+                android:hint="Contraseña"
                 android:inputType="textPassword" />
 
             <Switch
