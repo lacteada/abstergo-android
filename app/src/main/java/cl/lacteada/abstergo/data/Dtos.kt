@@ -37,6 +37,19 @@ data class UsuarioRequest(
     val password: String?,
 )
 
+data class Perfil(
+    val id: Int,
+    val email: String?,
+    @SerializedName("first_name") val nombre: String,
+    @SerializedName("last_name") val apellido: String,
+    val rol: Int?,
+    val delegacion: Int?,
+    @SerializedName("is_active") val activo: Boolean,
+    @SerializedName("rol_codigo") val rolCodigo: String? = null,
+    @SerializedName("modulos_lectura") val modulosLectura: List<String> = emptyList(),
+    @SerializedName("modulos_escritura") val modulosEscritura: List<String> = emptyList(),
+)
+
 data class Rol(val id: Int, val codigo: String?, val nombre: String, val descripcion: String?)
 
 data class Delegacion(val id: Int, val codigo: String, val nombre: String, val comuna: String)

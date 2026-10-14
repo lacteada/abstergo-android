@@ -2,6 +2,7 @@ package cl.lacteada.abstergo
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -39,6 +40,11 @@ class MainMenu : AppCompatActivity() {
 
         menuTitle.text = "Bienvenid@"
 
+        // Los módulos aparecen recién cuando llega el perfil del usuario.
+        btnVecinos.visibility = View.GONE
+        btnAtenciones.visibility = View.GONE
+        btnUsuarios.visibility = View.GONE
+
         btnVecinos.setOnClickListener {
             startActivity(Intent(this, VecinoCrud::class.java))
         }
@@ -56,8 +62,28 @@ class MainMenu : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        irALoginSiExpiro()
+        if (irALoginSiExpiro()) return
+        cargarPerfil()
     }
+
+    private fun cargarPerfil() {
+        lifecycleScope.launch {
+            try {
+                val perfil = Api.service.yo()
+                Api.perfil = perfil
+                menuTitle.text = "Bienvenid@ · ${perfil.rolCodigo ?: "sin rol"}"
+                btnVecinos.visibility = mostrar(Permisos.puedeLeer("vecinos"))
+                btnAtenciones.visibility = mostrar(Permisos.puedeLeer("atenciones"))
+                btnUsuarios.visibility = mostrar(Permisos.puedeLeer("usuarios"))
+            } catch (e: Exception) {
+                if (irALoginSiExpiro()) return@launch
+                // Sin perfil no se ofrece ningún módulo: queda cerrar sesión.
+                menuTitle.text = "No se pudo cargar el perfil"
+            }
+        }
+    }
+
+    private fun mostrar(si: Boolean) = if (si) View.VISIBLE else View.GONE
 
     private fun cerrarSesion() {
         val refresh = Api.sesion.refresh
@@ -65,6 +91,7 @@ class MainMenu : AppCompatActivity() {
             // Si falla, igual se limpia la sesión local.
             runCatching { refresh?.let { Api.service.cerrarSesion(RefreshRequest(it)) } }
             Api.sesion.limpiar()
+            Api.perfil = null
             val intent = Intent(this@MainMenu, MainActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(intent)

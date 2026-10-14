@@ -24,7 +24,7 @@ interface ApiService {
     suspend fun cerrarSesion(@Body cuerpo: RefreshRequest)
 
     @GET("api/v1/auth/me/")
-    suspend fun yo(): Usuario
+    suspend fun yo(): Perfil
 
     @POST("api/v1/auth/recuperar/")
     suspend fun recuperar(@Body cuerpo: RecuperarRequest): Detalle

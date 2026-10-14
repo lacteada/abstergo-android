@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import androidx.activity.enableEdgeToEdge
@@ -13,10 +14,11 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import cn.pedant.SweetAlert.SweetAlertDialog
 import cl.lacteada.abstergo.data.Api
 import cl.lacteada.abstergo.data.Atencion
+import cn.pedant.SweetAlert.SweetAlertDialog
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 
 class AtencionCrud : AppCompatActivity() {
 
@@ -43,6 +45,8 @@ class AtencionCrud : AppCompatActivity() {
         btnBack = findViewById(R.id.btnbackatenciones)
         btnNueva = findViewById(R.id.btnnuevaatencion)
         searchInput = findViewById(R.id.searchInputAtenciones)
+
+        if (!Permisos.puedeEscribir("atenciones")) btnNueva.visibility = View.GONE
 
         adapter = AtencionAdapter(
             describir = { atencion ->
@@ -86,7 +90,7 @@ class AtencionCrud : AppCompatActivity() {
                 filtrar(searchInput.text.toString())
             } catch (e: Exception) {
                 if (irALoginSiExpiro()) return@launch
-                aviso("Sin conexión", "No se pudo cargar la lista de atenciones.")
+                aviso(tituloError(e), textoError(e, "No se pudo cargar la lista de atenciones."))
             }
         }
     }
@@ -106,6 +110,10 @@ class AtencionCrud : AppCompatActivity() {
 
     private fun mostrarOpciones(atencion: Atencion) {
         val vecino = nombresVecinos[atencion.vecino] ?: "vecino ${atencion.vecino}"
+        if (!Permisos.puedeEscribir("atenciones")) {
+            aviso(vecino, "${atencion.motivo} · Tu rol solo permite ver.", SweetAlertDialog.WARNING_TYPE)
+            return
+        }
         SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
             .setTitleText(vecino)
             .setContentText("${atencion.motivo} · ¿Qué desea hacer?")
@@ -140,13 +148,23 @@ class AtencionCrud : AppCompatActivity() {
                 cargar()
             } catch (e: Exception) {
                 if (irALoginSiExpiro()) return@launch
-                aviso("No se pudo eliminar", "Revise su conexión e intente de nuevo.")
+                aviso(tituloError(e), textoError(e, "No se pudo eliminar. Revise su conexión."))
             }
         }
     }
 
-    private fun aviso(titulo: String, texto: String) {
-        SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE)
+    private fun tituloError(e: Exception) =
+        if (e is HttpException && e.code() == 403) "Sin permiso" else "No se pudo completar"
+
+    private fun textoError(e: Exception, alternativo: String) =
+        if (e is HttpException && e.code() == 403) "Tu rol no permite esta acción." else alternativo
+
+    private fun aviso(
+        titulo: String,
+        texto: String,
+        tipo: Int = SweetAlertDialog.ERROR_TYPE,
+    ) {
+        SweetAlertDialog(this, tipo)
             .setTitleText(titulo)
             .setContentText(texto)
             .setConfirmText("Aceptar")

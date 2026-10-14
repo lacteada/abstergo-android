@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import androidx.activity.enableEdgeToEdge
@@ -13,10 +14,11 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import cn.pedant.SweetAlert.SweetAlertDialog
 import cl.lacteada.abstergo.data.Api
 import cl.lacteada.abstergo.data.Vecino
+import cn.pedant.SweetAlert.SweetAlertDialog
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 
 class VecinoCrud : AppCompatActivity() {
 
@@ -41,6 +43,8 @@ class VecinoCrud : AppCompatActivity() {
         btnBack = findViewById(R.id.btnbackvecinos)
         btnNuevo = findViewById(R.id.btnnuevovecino)
         searchInput = findViewById(R.id.searchInputVecinos)
+
+        if (!Permisos.puedeEscribir("vecinos")) btnNuevo.visibility = View.GONE
 
         adapter = VecinoAdapter { vecino -> mostrarOpciones(vecino) }
         findViewById<RecyclerView>(R.id.listaVecinos).apply {
@@ -75,7 +79,7 @@ class VecinoCrud : AppCompatActivity() {
                 filtrar(searchInput.text.toString())
             } catch (e: Exception) {
                 if (irALoginSiExpiro()) return@launch
-                aviso("Sin conexión", "No se pudo cargar la lista de vecinos.")
+                aviso(tituloError(e), textoError(e, "No se pudo cargar la lista de vecinos."))
             }
         }
     }
@@ -93,6 +97,14 @@ class VecinoCrud : AppCompatActivity() {
     }
 
     private fun mostrarOpciones(vecino: Vecino) {
+        if (!Permisos.puedeEscribir("vecinos")) {
+            aviso(
+                vecino.nombre,
+                "${vecino.rut} · Tu rol solo permite ver.",
+                SweetAlertDialog.WARNING_TYPE,
+            )
+            return
+        }
         SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
             .setTitleText(vecino.nombre)
             .setContentText("${vecino.rut} · ¿Qué desea hacer?")
@@ -125,13 +137,23 @@ class VecinoCrud : AppCompatActivity() {
                 cargar()
             } catch (e: Exception) {
                 if (irALoginSiExpiro()) return@launch
-                aviso("No se pudo eliminar", "Revise su conexión e intente de nuevo.")
+                aviso(tituloError(e), textoError(e, "No se pudo eliminar. Revise su conexión."))
             }
         }
     }
 
-    private fun aviso(titulo: String, texto: String) {
-        SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE)
+    private fun tituloError(e: Exception) =
+        if (e is HttpException && e.code() == 403) "Sin permiso" else "No se pudo completar"
+
+    private fun textoError(e: Exception, alternativo: String) =
+        if (e is HttpException && e.code() == 403) "Tu rol no permite esta acción." else alternativo
+
+    private fun aviso(
+        titulo: String,
+        texto: String,
+        tipo: Int = SweetAlertDialog.ERROR_TYPE,
+    ) {
+        SweetAlertDialog(this, tipo)
             .setTitleText(titulo)
             .setContentText(texto)
             .setConfirmText("Aceptar")

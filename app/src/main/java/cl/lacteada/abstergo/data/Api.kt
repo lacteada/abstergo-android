@@ -17,6 +17,10 @@ object Api {
     lateinit var sesion: Sesion
         private set
 
+    /** El perfil del usuario con su rol y módulos permitidos. Lo carga el menú. */
+    @Volatile
+    var perfil: Perfil? = null
+
     fun init(context: Context) {
         if (!::sesion.isInitialized) {
             sesion = Sesion(context.applicationContext)
