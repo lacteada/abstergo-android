@@ -2,59 +2,44 @@ package cl.lacteada.abstergo
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cl.lacteada.abstergo.data.Api
-import cl.lacteada.abstergo.data.Atencion
+import cl.lacteada.abstergo.data.Attention
 import cn.pedant.SweetAlert.SweetAlertDialog
 import kotlinx.coroutines.launch
-import retrofit2.HttpException
 
-class AtencionCrud : AppCompatActivity() {
+class AtencionCrud : ActividadBase() {
 
     private lateinit var btnBack: Button
     private lateinit var btnNueva: Button
     private lateinit var searchInput: EditText
-    private lateinit var adapter: AtencionAdapter
-    private var atenciones: List<Atencion> = emptyList()
+    private lateinit var adapter: ListaAdapter<Attention>
+    private var atenciones: List<Attention> = emptyList()
     private var nombresVecinos: Map<Int, String> = emptyMap()
     private var nombresTipos: Map<Int, String> = emptyMap()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_atenciones)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            val ime = insets.getInsets(WindowInsetsCompat.Type.ime())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            v.translationY = -ime.bottom.toFloat()
-            insets
-        }
 
         btnBack = findViewById(R.id.btnbackatenciones)
         btnNueva = findViewById(R.id.btnnuevaatencion)
         searchInput = findViewById(R.id.searchInputAtenciones)
 
-        if (!Permisos.puedeEscribir("atenciones")) btnNueva.visibility = View.GONE
+        if (!Permisos.puedeEscribir("cases")) btnNueva.visibility = View.GONE
 
-        adapter = AtencionAdapter(
+        adapter = ListaAdapter(
             describir = { atencion ->
-                val vecino = nombresVecinos[atencion.vecino] ?: "vecino ${atencion.vecino}"
-                val tipo = nombresTipos[atencion.tipo_atencion] ?: "tipo ${atencion.tipo_atencion}"
-                "$vecino · $tipo · ${atencion.estado} · ${atencion.motivo}"
+                val vecino = nombresVecinos[atencion.neighbor] ?: "vecino ${atencion.neighbor}"
+                val tipo = nombresTipos[atencion.attentionType] ?: "tipo ${atencion.attentionType}"
+                "$vecino · $tipo · ${atencion.status} · ${atencion.reason}"
             },
-            alTocar = { atencion -> mostrarOpciones(atencion) },
+            alTocar = { mostrarOpciones(it) },
         )
         findViewById<RecyclerView>(R.id.listaAtenciones).apply {
             layoutManager = LinearLayoutManager(this@AtencionCrud)
@@ -62,17 +47,8 @@ class AtencionCrud : AppCompatActivity() {
         }
 
         btnBack.setOnClickListener { finish() }
-        btnNueva.setOnClickListener {
-            startActivity(Intent(this, AtencionForm::class.java))
-        }
-
-        searchInput.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                filtrar(s?.toString().orEmpty())
-            }
-            override fun afterTextChanged(s: Editable?) {}
-        })
+        btnNueva.setOnClickListener { startActivity(Intent(this, AtencionForm::class.java)) }
+        searchInput.addTextChangedListener(filtro { filtrar(it) })
     }
 
     override fun onResume() {
@@ -84,54 +60,54 @@ class AtencionCrud : AppCompatActivity() {
     private fun cargar() {
         lifecycleScope.launch {
             try {
-                nombresVecinos = Api.service.vecinos().results.associate { it.id to it.nombre }
-                nombresTipos = Api.service.tiposAtencion().results.associate { it.id to it.nombre }
-                atenciones = Api.service.atenciones().results
+                nombresVecinos = Api.service.neighbors().results.associate { it.id!! to it.name }
+                nombresTipos = Api.service.attentionTypes().results.associate { it.id to it.name }
+                atenciones = Api.service.cases().results
                 filtrar(searchInput.text.toString())
             } catch (e: Exception) {
                 if (irALoginSiExpiro()) return@launch
-                aviso(tituloError(e), textoError(e, "No se pudo cargar la lista de atenciones."))
+                aviso(tituloDeError(e), textoDeError(e, "No se pudo cargar la lista de atenciones."))
             }
         }
     }
 
     private fun filtrar(consulta: String) {
         val texto = consulta.trim().lowercase()
-        val filtradas = if (texto.isEmpty()) {
+        val visibles = if (texto.isEmpty()) {
             atenciones
         } else {
             atenciones.filter {
-                val vecino = nombresVecinos[it.vecino].orEmpty()
-                vecino.lowercase().contains(texto) || it.motivo.lowercase().contains(texto)
+                nombresVecinos[it.neighbor].orEmpty().lowercase().contains(texto) ||
+                    it.reason.lowercase().contains(texto)
             }
         }
-        adapter.setDatos(filtradas)
+        adapter.setDatos(visibles)
     }
 
-    private fun mostrarOpciones(atencion: Atencion) {
-        val vecino = nombresVecinos[atencion.vecino] ?: "vecino ${atencion.vecino}"
-        if (!Permisos.puedeEscribir("atenciones")) {
-            aviso(vecino, "${atencion.motivo} · Tu rol solo permite ver.", SweetAlertDialog.WARNING_TYPE)
+    private fun mostrarOpciones(atencion: Attention) {
+        val vecino = nombresVecinos[atencion.neighbor] ?: "vecino ${atencion.neighbor}"
+        if (!Permisos.puedeEscribir("cases")) {
+            aviso(vecino, "${atencion.reason} · Tu rol solo permite ver.", SweetAlertDialog.WARNING_TYPE)
             return
         }
         SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
             .setTitleText(vecino)
-            .setContentText("${atencion.motivo} · ¿Qué desea hacer?")
+            .setContentText("${atencion.reason} · ¿Qué desea hacer?")
             .setConfirmText("Editar")
             .setCancelText("Eliminar")
             .setConfirmClickListener { dialogo ->
                 dialogo.dismissWithAnimation()
                 startActivity(Intent(this, AtencionForm::class.java).apply {
-                    putExtra("id", atencion.id)
-                    putExtra("vecino", atencion.vecino)
-                    putExtra("tipo_atencion", atencion.tipo_atencion)
-                    putExtra("sub_atencion", atencion.sub_atencion ?: 0)
-                    putExtra("delegacion", atencion.delegacion)
-                    putExtra("funcionario", atencion.funcionario)
-                    putExtra("motivo", atencion.motivo)
-                    putExtra("detalle", atencion.detalle)
-                    putExtra("estado", atencion.estado)
-                    putExtra("canal", atencion.canal)
+                    putExtra("id", atencion.id ?: 0)
+                    putExtra("neighbor", atencion.neighbor)
+                    putExtra("attention_type", atencion.attentionType)
+                    putExtra("attention_subtype", atencion.attentionSubtype ?: 0)
+                    putExtra("delegation", atencion.delegation)
+                    putExtra("staff", atencion.staff)
+                    putExtra("reason", atencion.reason)
+                    putExtra("detail", atencion.detail)
+                    putExtra("status", atencion.status)
+                    putExtra("channel", atencion.channel)
                 })
             }
             .setCancelClickListener { dialogo ->
@@ -141,34 +117,16 @@ class AtencionCrud : AppCompatActivity() {
             .show()
     }
 
-    private fun eliminar(atencion: Atencion) {
+    private fun eliminar(atencion: Attention) {
+        val id = atencion.id ?: return
         lifecycleScope.launch {
             try {
-                Api.service.eliminarAtencion(atencion.id)
+                Api.service.deleteCase(id)
                 cargar()
             } catch (e: Exception) {
                 if (irALoginSiExpiro()) return@launch
-                aviso(tituloError(e), textoError(e, "No se pudo eliminar. Revise su conexión."))
+                aviso(tituloDeError(e), textoDeError(e, "No se pudo eliminar. Revise su conexión."))
             }
         }
-    }
-
-    private fun tituloError(e: Exception) =
-        if (e is HttpException && e.code() == 403) "Sin permiso" else "No se pudo completar"
-
-    private fun textoError(e: Exception, alternativo: String) =
-        if (e is HttpException && e.code() == 403) "Tu rol no permite esta acción." else alternativo
-
-    private fun aviso(
-        titulo: String,
-        texto: String,
-        tipo: Int = SweetAlertDialog.ERROR_TYPE,
-    ) {
-        SweetAlertDialog(this, tipo)
-            .setTitleText(titulo)
-            .setContentText(texto)
-            .setConfirmText("Aceptar")
-            .setConfirmClickListener { it.dismissWithAnimation() }
-            .show()
     }
 }

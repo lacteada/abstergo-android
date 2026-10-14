@@ -5,58 +5,45 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import cl.lacteada.abstergo.data.Api
 import cl.lacteada.abstergo.data.RefreshRequest
 import kotlinx.coroutines.launch
 
-class MainMenu : AppCompatActivity() {
+class MainMenu : ActividadBase() {
 
     private lateinit var menuTitle: TextView
-    private lateinit var btnVecinos: Button
-    private lateinit var btnAtenciones: Button
-    private lateinit var btnUsuarios: Button
+    private lateinit var btnNeighbors: Button
+    private lateinit var btnCases: Button
+    private lateinit var btnUsers: Button
     private lateinit var btnLogout: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_main_menu)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
 
         menuTitle = findViewById(R.id.menu_title)
-        btnVecinos = findViewById(R.id.btn_vecinos)
-        btnAtenciones = findViewById(R.id.btn_atenciones)
-        btnUsuarios = findViewById(R.id.btn_usuarios)
+        btnNeighbors = findViewById(R.id.btn_vecinos)
+        btnCases = findViewById(R.id.btn_atenciones)
+        btnUsers = findViewById(R.id.btn_usuarios)
         btnLogout = findViewById(R.id.btn_logout)
 
         menuTitle.text = "Bienvenid@"
 
         // Los módulos aparecen recién cuando llega el perfil del usuario.
-        btnVecinos.visibility = View.GONE
-        btnAtenciones.visibility = View.GONE
-        btnUsuarios.visibility = View.GONE
+        btnNeighbors.visibility = View.GONE
+        btnCases.visibility = View.GONE
+        btnUsers.visibility = View.GONE
 
-        btnVecinos.setOnClickListener {
+        btnNeighbors.setOnClickListener {
             startActivity(Intent(this, VecinoCrud::class.java))
         }
-
-        btnAtenciones.setOnClickListener {
+        btnCases.setOnClickListener {
             startActivity(Intent(this, AtencionCrud::class.java))
         }
-
-        btnUsuarios.setOnClickListener {
+        btnUsers.setOnClickListener {
             startActivity(Intent(this, UsuarioCrud::class.java))
         }
-
         btnLogout.setOnClickListener { cerrarSesion() }
     }
 
@@ -69,12 +56,12 @@ class MainMenu : AppCompatActivity() {
     private fun cargarPerfil() {
         lifecycleScope.launch {
             try {
-                val perfil = Api.service.yo()
+                val perfil = Api.service.me()
                 Api.perfil = perfil
-                menuTitle.text = "Bienvenid@ · ${perfil.rolCodigo ?: "sin rol"}"
-                btnVecinos.visibility = mostrar(Permisos.puedeLeer("vecinos"))
-                btnAtenciones.visibility = mostrar(Permisos.puedeLeer("atenciones"))
-                btnUsuarios.visibility = mostrar(Permisos.puedeLeer("usuarios"))
+                menuTitle.text = "Bienvenid@ · ${perfil.roleCode ?: "sin rol"}"
+                btnNeighbors.visibility = mostrar(Permisos.puedeLeer("neighbors"))
+                btnCases.visibility = mostrar(Permisos.puedeLeer("cases"))
+                btnUsers.visibility = mostrar(Permisos.puedeLeer("users"))
             } catch (e: Exception) {
                 if (irALoginSiExpiro()) return@launch
                 // Sin perfil no se ofrece ningún módulo: queda cerrar sesión.
@@ -89,7 +76,7 @@ class MainMenu : AppCompatActivity() {
         val refresh = Api.sesion.refresh
         lifecycleScope.launch {
             // Si falla, igual se limpia la sesión local.
-            runCatching { refresh?.let { Api.service.cerrarSesion(RefreshRequest(it)) } }
+            runCatching { refresh?.let { Api.service.logout(RefreshRequest(it)) } }
             Api.sesion.limpiar()
             Api.perfil = null
             val intent = Intent(this@MainMenu, MainActivity::class.java)

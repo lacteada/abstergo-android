@@ -9,8 +9,8 @@ import cl.lacteada.abstergo.data.Api
 object Permisos {
 
     fun puedeLeer(modulo: String): Boolean =
-        Api.perfil?.modulosLectura?.contains(modulo) == true
+        Api.perfil?.readModules?.contains(modulo) == true
 
     fun puedeEscribir(modulo: String): Boolean =
-        Api.perfil?.modulosEscritura?.contains(modulo) == true
+        Api.perfil?.writeModules?.contains(modulo) == true
 }

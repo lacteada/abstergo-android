@@ -1,6 +1,7 @@
 package cl.lacteada.abstergo.data
 
 import android.content.Context
+import cl.lacteada.abstergo.BuildConfig
 import okhttp3.Authenticator
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -8,18 +9,18 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-/** Cliente único contra la API de abstergo. */
+/** El cliente único contra la API de abstergo. */
 object Api {
 
-    // Host de desarrollo con certificado autofirmado (ver network_security_config).
-    const val BASE_URL = "https://18.209.251.129/"
+    /** Sale de `buildConfigField`: cambia según la variante. */
+    val BASE_URL: String = BuildConfig.BASE_URL
 
     lateinit var sesion: Sesion
         private set
 
-    /** El perfil del usuario con su rol y módulos permitidos. Lo carga el menú. */
+    /** El perfil del usuario con su rol y módulos. Lo carga el menú. */
     @Volatile
-    var perfil: Perfil? = null
+    var perfil: Profile? = null
 
     fun init(context: Context) {
         if (!::sesion.isInitialized) {
@@ -47,7 +48,7 @@ object Api {
 
         val refresh = sesion.refresh ?: return@Authenticator null
         try {
-            val llamada = servicioRefresh.refrescarSync(RefreshRequest(refresh)).execute()
+            val llamada = servicioRefresh.refreshSync(RefreshRequest(refresh)).execute()
             val cuerpo = llamada.body()
             if (llamada.isSuccessful && cuerpo != null) {
                 sesion.guardar(cuerpo.access, cuerpo.refresh ?: refresh)

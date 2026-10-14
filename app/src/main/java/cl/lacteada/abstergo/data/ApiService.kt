@@ -8,78 +8,84 @@ import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Path
 
+/** El contrato de `/api/v1/`. Las rutas y los campos están en inglés. */
 interface ApiService {
 
+    // --------------------------------------------------------- Autenticación
     @POST("api/v1/auth/login/")
-    suspend fun login(@Body cuerpo: LoginRequest): TokenResponse
+    suspend fun login(@Body body: LoginRequest): TokenResponse
 
     @POST("api/v1/auth/refresh/")
-    suspend fun refrescar(@Body cuerpo: RefreshRequest): TokenResponse
+    suspend fun refresh(@Body body: RefreshRequest): TokenResponse
 
-    /** Versión síncrona, para el Authenticator de OkHttp. */
+    /** Igual que `refresh`, pero sincrónica: la usa el `Authenticator` de OkHttp. */
     @POST("api/v1/auth/refresh/")
-    fun refrescarSync(@Body cuerpo: RefreshRequest): Call<TokenResponse>
+    fun refreshSync(@Body body: RefreshRequest): Call<TokenResponse>
 
     @POST("api/v1/auth/logout/")
-    suspend fun cerrarSesion(@Body cuerpo: RefreshRequest)
+    suspend fun logout(@Body body: RefreshRequest)
 
     @GET("api/v1/auth/me/")
-    suspend fun yo(): Perfil
+    suspend fun me(): Profile
 
-    @POST("api/v1/auth/recuperar/")
-    suspend fun recuperar(@Body cuerpo: RecuperarRequest): Detalle
+    @POST("api/v1/auth/recover/")
+    suspend fun recover(@Body body: RecoverRequest): Message
 
-    @POST("api/v1/auth/validar/")
-    suspend fun validar(@Body cuerpo: ValidarRequest): Detalle
+    @POST("api/v1/auth/verify/")
+    suspend fun verify(@Body body: VerifyRequest): Message
 
-    @POST("api/v1/auth/nueva-password/")
-    suspend fun nuevaPassword(@Body cuerpo: NuevaPasswordRequest): Detalle
+    @POST("api/v1/auth/new-password/")
+    suspend fun newPassword(@Body body: NewPasswordRequest): Message
 
-    @GET("api/v1/usuarios/")
-    suspend fun usuarios(): Pagina<Usuario>
-
-    @POST("api/v1/usuarios/")
-    suspend fun crearUsuario(@Body cuerpo: UsuarioRequest): Usuario
-
-    @PATCH("api/v1/usuarios/{id}/")
-    suspend fun actualizarUsuario(@Path("id") id: Int, @Body cuerpo: UsuarioRequest): Usuario
-
-    @DELETE("api/v1/usuarios/{id}/")
-    suspend fun eliminarUsuario(@Path("id") id: Int)
-
+    // ------------------------------------------------------------ Catálogos
     @GET("api/v1/roles/")
-    suspend fun roles(): Pagina<Rol>
+    suspend fun roles(): Page<Role>
 
-    @GET("api/v1/delegaciones/")
-    suspend fun delegaciones(): Pagina<Delegacion>
+    @GET("api/v1/delegations/")
+    suspend fun delegations(): Page<Delegation>
 
-    @GET("api/v1/vecinos/")
-    suspend fun vecinos(): Pagina<Vecino>
+    @GET("api/v1/attention-types/")
+    suspend fun attentionTypes(): Page<AttentionType>
 
-    @POST("api/v1/vecinos/")
-    suspend fun crearVecino(@Body cuerpo: VecinoRequest): Vecino
+    @GET("api/v1/attention-subtypes/")
+    suspend fun attentionSubtypes(): Page<AttentionSubtype>
 
-    @PATCH("api/v1/vecinos/{id}/")
-    suspend fun actualizarVecino(@Path("id") id: Int, @Body cuerpo: VecinoRequest): Vecino
+    // ------------------------------------------------------------- Usuarios
+    @GET("api/v1/users/")
+    suspend fun users(): Page<User>
 
-    @DELETE("api/v1/vecinos/{id}/")
-    suspend fun eliminarVecino(@Path("id") id: Int)
+    @POST("api/v1/users/")
+    suspend fun createUser(@Body body: User): User
 
-    @GET("api/v1/tipos-atencion/")
-    suspend fun tiposAtencion(): Pagina<TipoAtencion>
+    @PATCH("api/v1/users/{id}/")
+    suspend fun updateUser(@Path("id") id: Int, @Body body: User): User
 
-    @GET("api/v1/sub-atenciones/")
-    suspend fun subAtenciones(): Pagina<SubAtencion>
+    @DELETE("api/v1/users/{id}/")
+    suspend fun deleteUser(@Path("id") id: Int)
 
-    @GET("api/v1/atenciones/")
-    suspend fun atenciones(): Pagina<Atencion>
+    // -------------------------------------------------------------- Vecinos
+    @GET("api/v1/neighbors/")
+    suspend fun neighbors(): Page<Neighbor>
 
-    @POST("api/v1/atenciones/")
-    suspend fun crearAtencion(@Body cuerpo: AtencionRequest): Atencion
+    @POST("api/v1/neighbors/")
+    suspend fun createNeighbor(@Body body: Neighbor): Neighbor
 
-    @PATCH("api/v1/atenciones/{id}/")
-    suspend fun actualizarAtencion(@Path("id") id: Int, @Body cuerpo: AtencionRequest): Atencion
+    @PATCH("api/v1/neighbors/{id}/")
+    suspend fun updateNeighbor(@Path("id") id: Int, @Body body: Neighbor): Neighbor
 
-    @DELETE("api/v1/atenciones/{id}/")
-    suspend fun eliminarAtencion(@Path("id") id: Int)
+    @DELETE("api/v1/neighbors/{id}/")
+    suspend fun deleteNeighbor(@Path("id") id: Int)
+
+    // ------------------------------------------------------------ Atenciones
+    @GET("api/v1/cases/")
+    suspend fun cases(): Page<Attention>
+
+    @POST("api/v1/cases/")
+    suspend fun createCase(@Body body: Attention): Attention
+
+    @PATCH("api/v1/cases/{id}/")
+    suspend fun updateCase(@Path("id") id: Int, @Body body: Attention): Attention
+
+    @DELETE("api/v1/cases/{id}/")
+    suspend fun deleteCase(@Path("id") id: Int)
 }

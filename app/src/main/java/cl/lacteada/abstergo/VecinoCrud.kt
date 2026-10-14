@@ -2,68 +2,47 @@ package cl.lacteada.abstergo
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cl.lacteada.abstergo.data.Api
-import cl.lacteada.abstergo.data.Vecino
+import cl.lacteada.abstergo.data.Neighbor
 import cn.pedant.SweetAlert.SweetAlertDialog
 import kotlinx.coroutines.launch
-import retrofit2.HttpException
 
-class VecinoCrud : AppCompatActivity() {
+class VecinoCrud : ActividadBase() {
 
     private lateinit var btnBack: Button
     private lateinit var btnNuevo: Button
     private lateinit var searchInput: EditText
-    private lateinit var adapter: VecinoAdapter
-    private var vecinos: List<Vecino> = emptyList()
+    private lateinit var adapter: ListaAdapter<Neighbor>
+    private var vecinos: List<Neighbor> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_vecino_crud)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            val ime = insets.getInsets(WindowInsetsCompat.Type.ime())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            v.translationY = -ime.bottom.toFloat()
-            insets
-        }
 
         btnBack = findViewById(R.id.btnbackvecinos)
         btnNuevo = findViewById(R.id.btnnuevovecino)
         searchInput = findViewById(R.id.searchInputVecinos)
 
-        if (!Permisos.puedeEscribir("vecinos")) btnNuevo.visibility = View.GONE
+        if (!Permisos.puedeEscribir("neighbors")) btnNuevo.visibility = View.GONE
 
-        adapter = VecinoAdapter { vecino -> mostrarOpciones(vecino) }
+        adapter = ListaAdapter(
+            describir = { "${it.name} · ${it.rut} · ${it.status}" },
+            alTocar = { mostrarOpciones(it) },
+        )
         findViewById<RecyclerView>(R.id.listaVecinos).apply {
             layoutManager = LinearLayoutManager(this@VecinoCrud)
             adapter = this@VecinoCrud.adapter
         }
 
         btnBack.setOnClickListener { finish() }
-        btnNuevo.setOnClickListener {
-            startActivity(Intent(this, VecinoForm::class.java))
-        }
-
-        searchInput.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                filtrar(s?.toString().orEmpty())
-            }
-            override fun afterTextChanged(s: Editable?) {}
-        })
+        btnNuevo.setOnClickListener { startActivity(Intent(this, VecinoForm::class.java)) }
+        searchInput.addTextChangedListener(filtro { filtrar(it) })
     }
 
     override fun onResume() {
@@ -75,52 +54,52 @@ class VecinoCrud : AppCompatActivity() {
     private fun cargar() {
         lifecycleScope.launch {
             try {
-                vecinos = Api.service.vecinos().results
+                vecinos = Api.service.neighbors().results
                 filtrar(searchInput.text.toString())
             } catch (e: Exception) {
                 if (irALoginSiExpiro()) return@launch
-                aviso(tituloError(e), textoError(e, "No se pudo cargar la lista de vecinos."))
+                aviso(tituloDeError(e), textoDeError(e, "No se pudo cargar la lista de vecinos."))
             }
         }
     }
 
     private fun filtrar(consulta: String) {
         val texto = consulta.trim().lowercase()
-        val filtrados = if (texto.isEmpty()) {
+        val visibles = if (texto.isEmpty()) {
             vecinos
         } else {
             vecinos.filter {
-                it.nombre.lowercase().contains(texto) || it.rut.lowercase().contains(texto)
+                it.name.lowercase().contains(texto) || it.rut.lowercase().contains(texto)
             }
         }
-        adapter.setDatos(filtrados)
+        adapter.setDatos(visibles)
     }
 
-    private fun mostrarOpciones(vecino: Vecino) {
-        if (!Permisos.puedeEscribir("vecinos")) {
+    private fun mostrarOpciones(vecino: Neighbor) {
+        if (!Permisos.puedeEscribir("neighbors")) {
             aviso(
-                vecino.nombre,
+                vecino.name,
                 "${vecino.rut} · Tu rol solo permite ver.",
                 SweetAlertDialog.WARNING_TYPE,
             )
             return
         }
         SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
-            .setTitleText(vecino.nombre)
+            .setTitleText(vecino.name)
             .setContentText("${vecino.rut} · ¿Qué desea hacer?")
             .setConfirmText("Editar")
             .setCancelText("Eliminar")
             .setConfirmClickListener { dialogo ->
                 dialogo.dismissWithAnimation()
                 startActivity(Intent(this, VecinoForm::class.java).apply {
-                    putExtra("id", vecino.id)
-                    putExtra("nombre", vecino.nombre)
+                    putExtra("id", vecino.id ?: 0)
+                    putExtra("name", vecino.name)
                     putExtra("rut", vecino.rut)
-                    putExtra("direccion", vecino.direccion)
-                    putExtra("telefono", vecino.telefono)
-                    putExtra("territorio", vecino.territorio)
-                    putExtra("tipo_gestion", vecino.tipo_gestion)
-                    putExtra("estado", vecino.estado)
+                    putExtra("address", vecino.address)
+                    putExtra("phone", vecino.phone)
+                    putExtra("territory", vecino.territory)
+                    putExtra("management_type", vecino.managementType)
+                    putExtra("status", vecino.status)
                 })
             }
             .setCancelClickListener { dialogo ->
@@ -130,34 +109,16 @@ class VecinoCrud : AppCompatActivity() {
             .show()
     }
 
-    private fun eliminar(vecino: Vecino) {
+    private fun eliminar(vecino: Neighbor) {
+        val id = vecino.id ?: return
         lifecycleScope.launch {
             try {
-                Api.service.eliminarVecino(vecino.id)
+                Api.service.deleteNeighbor(id)
                 cargar()
             } catch (e: Exception) {
                 if (irALoginSiExpiro()) return@launch
-                aviso(tituloError(e), textoError(e, "No se pudo eliminar. Revise su conexión."))
+                aviso(tituloDeError(e), textoDeError(e, "No se pudo eliminar. Revise su conexión."))
             }
         }
-    }
-
-    private fun tituloError(e: Exception) =
-        if (e is HttpException && e.code() == 403) "Sin permiso" else "No se pudo completar"
-
-    private fun textoError(e: Exception, alternativo: String) =
-        if (e is HttpException && e.code() == 403) "Tu rol no permite esta acción." else alternativo
-
-    private fun aviso(
-        titulo: String,
-        texto: String,
-        tipo: Int = SweetAlertDialog.ERROR_TYPE,
-    ) {
-        SweetAlertDialog(this, tipo)
-            .setTitleText(titulo)
-            .setContentText(texto)
-            .setConfirmText("Aceptar")
-            .setConfirmClickListener { it.dismissWithAnimation() }
-            .show()
     }
 }

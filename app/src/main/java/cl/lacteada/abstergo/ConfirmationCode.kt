@@ -6,18 +6,14 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Button
 import android.widget.EditText
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
-import cn.pedant.SweetAlert.SweetAlertDialog
 import cl.lacteada.abstergo.data.Api
-import cl.lacteada.abstergo.data.ValidarRequest
+import cl.lacteada.abstergo.data.VerifyRequest
+import cn.pedant.SweetAlert.SweetAlertDialog
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 
-class ConfirmationCode : AppCompatActivity() {
+class ConfirmationCode : ActividadBase() {
 
     private lateinit var digits: List<EditText>
     private lateinit var btnBack: Button
@@ -25,15 +21,7 @@ class ConfirmationCode : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_confirmation_code)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            val ime = insets.getInsets(WindowInsetsCompat.Type.ime())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            v.translationY = -ime.bottom.toFloat()
-            insets
-        }
 
         digits = listOf(
             findViewById(R.id.digit1),
@@ -41,85 +29,69 @@ class ConfirmationCode : AppCompatActivity() {
             findViewById(R.id.digit3),
             findViewById(R.id.digit4),
             findViewById(R.id.digit5),
-            findViewById(R.id.digit6)
+            findViewById(R.id.digit6),
         )
 
         btnBack = findViewById(R.id.btnbackconfirmation)
         btnVerify = findViewById(R.id.btnverifycode)
 
-        btnBack.setOnClickListener {
-            finish()
-        }
+        btnBack.setOnClickListener { finish() }
+        btnVerify.setOnClickListener { verificarCodigo() }
 
-        setupDigitAutoAdvance()
-
-        btnVerify.setOnClickListener {
-            val email = intent.getStringExtra("email") ?: ""
-            val code = digits.joinToString("") { it.text.toString().trim() }
-
-            if (code.length < 6) {
-                SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
-                    .setTitleText("Código incompleto")
-                    .setContentText("Ingrese los 6 dígitos.")
-                    .setConfirmText("Entiendo")
-                    .setConfirmClickListener { it.dismissWithAnimation() }
-                    .show()
-                return@setOnClickListener
-            }
-
-            verificar(email, code)
+        digits.forEachIndexed { indice, campo ->
+            campo.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, a: Int, b: Int, c: Int) {}
+                override fun afterTextChanged(s: Editable?) {}
+                override fun onTextChanged(s: CharSequence?, a: Int, b: Int, c: Int) {
+                    if (s?.length == 1 && indice < digits.size - 1) {
+                        digits[indice + 1].requestFocus()
+                    }
+                }
+            })
         }
     }
 
-    private fun verificar(email: String, codigo: String) {
-        val dialogo = SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE)
-        dialogo.titleText = "Verificando..."
-        dialogo.setCancelable(false)
-        dialogo.show()
+    private fun verificarCodigo() {
+        val email = intent.getStringExtra("email").orEmpty()
+        val code = digits.joinToString("") { it.text.toString().trim() }
 
+        if (code.length < 6) {
+            aviso("Código incompleto", "Ingrese los 6 dígitos.", SweetAlertDialog.WARNING_TYPE)
+            return
+        }
+        verificar(email, code)
+    }
+
+    private fun verificar(email: String, code: String) {
+        val dialogo = dialogoProgreso("Verificando...")
         lifecycleScope.launch {
             try {
-                Api.service.validar(ValidarRequest(email, codigo))
-
-                dialogo.changeAlertType(SweetAlertDialog.SUCCESS_TYPE)
-                dialogo.titleText = "¡Código correcto!"
-                dialogo.contentText = "Ahora puede crear una nueva contraseña."
-                dialogo.confirmText = "Continuar"
-                dialogo.setConfirmClickListener {
-                    it.dismissWithAnimation()
+                Api.service.verify(VerifyRequest(email, code))
+                dialogo.terminar(
+                    SweetAlertDialog.SUCCESS_TYPE,
+                    "¡Código correcto!",
+                    "Ahora puede crear una nueva contraseña.",
+                    boton = "Continuar",
+                ) {
                     val intent = Intent(this@ConfirmationCode, NewPassword::class.java)
                     intent.putExtra("email", email)
-                    intent.putExtra("codigo", codigo)
+                    intent.putExtra("code", code)
                     startActivity(intent)
                     finish()
                 }
             } catch (e: HttpException) {
-                dialogo.changeAlertType(SweetAlertDialog.ERROR_TYPE)
-                dialogo.titleText = "Código incorrecto"
-                dialogo.contentText = "El código es inválido o ya venció."
-                dialogo.confirmText = "Aceptar"
-                dialogo.setConfirmClickListener { it.dismissWithAnimation() }
+                dialogo.terminar(
+                    SweetAlertDialog.ERROR_TYPE,
+                    "Código incorrecto",
+                    "El código es inválido o ya venció.",
+                )
             } catch (e: Exception) {
-                dialogo.changeAlertType(SweetAlertDialog.ERROR_TYPE)
-                dialogo.titleText = "Sin conexión"
-                dialogo.contentText = "No se pudo contactar al servidor."
-                dialogo.confirmText = "Aceptar"
-                dialogo.setConfirmClickListener { it.dismissWithAnimation() }
+                dialogo.terminar(
+                    SweetAlertDialog.ERROR_TYPE,
+                    "Sin conexión",
+                    "No se pudo contactar al servidor.",
+                )
             }
-        }
-    }
-
-    private fun setupDigitAutoAdvance() {
-        for (i in digits.indices) {
-            digits[i].addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    if (s?.length == 1 && i < digits.size - 1) {
-                        digits[i + 1].requestFocus()
-                    }
-                }
-                override fun afterTextChanged(s: Editable?) {}
-            })
         }
     }
 }

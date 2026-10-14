@@ -1,8 +1,10 @@
+import com.android.build.api.dsl.ApplicationExtension
+
 plugins {
     alias(libs.plugins.android.application)
 }
 
-android {
+extensions.configure<ApplicationExtension>("android") {
     namespace = "cl.lacteada.abstergo"
     compileSdk {
         version = release(37)
@@ -19,7 +21,13 @@ android {
     }
 
     buildTypes {
+        debug {
+            // Host de desarrollo, con certificado autofirmado.
+            buildConfigField("String", "BASE_URL", "\"https://18.209.251.129/\"")
+        }
         release {
+            // Cuando exista el dominio de producción, se cambia acá.
+            buildConfigField("String", "BASE_URL", "\"https://18.209.251.129/\"")
             optimization {
                 enable = false
             }
@@ -30,7 +38,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
     buildFeatures {
-        viewBinding = true
+        buildConfig = true
     }
 }
 
@@ -39,8 +47,6 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.navigation.fragment.ktx)
-    implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.material)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -53,7 +59,6 @@ dependencies {
     implementation(libs.retrofit.gson)
     implementation(libs.okhttp.logging)
     implementation(libs.kotlinx.coroutines.android)
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.security.crypto)
