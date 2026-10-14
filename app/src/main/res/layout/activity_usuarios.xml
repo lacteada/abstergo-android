@@ -70,6 +70,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnnuevousuario" />
 
+    <TextView
+        android:id="@+id/txtEstadoSync"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:fontFamily="monospace"
+        android:text=""
+        android:textColor="#80D3D3D3"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchInputUsuarios" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listaUsuarios"
         android:layout_width="match_parent"
@@ -81,6 +94,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchInputUsuarios" />
+        app:layout_constraintTop_toBottomOf="@+id/txtEstadoSync" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

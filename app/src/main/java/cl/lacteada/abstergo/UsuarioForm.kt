@@ -1,21 +1,23 @@
 package cl.lacteada.abstergo
 
 import android.os.Bundle
-import android.widget.ArrayAdapter
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.Switch
 import android.widget.TextView
-import androidx.lifecycle.lifecycleScope
-import cl.lacteada.abstergo.data.Api
-import cl.lacteada.abstergo.data.Delegation
-import cl.lacteada.abstergo.data.Role
-import cl.lacteada.abstergo.data.User
+import cl.lacteada.abstergo.data.BdLocal
+import cl.lacteada.abstergo.data.UsuarioLocal
 import cl.lacteada.abstergo.dominio.Patrones
 import cn.pedant.SweetAlert.SweetAlertDialog
-import kotlinx.coroutines.launch
+import java.util.UUID
 
+/**
+ * Alta y edición de un usuario, sobre la base local.
+ *
+ * Lo guardado queda pendiente y el listado lo sube a MySQL cuando hay conexión.
+ */
 class UsuarioForm : ActividadBase() {
 
     private lateinit var btnBack: Button
@@ -25,13 +27,10 @@ class UsuarioForm : ActividadBase() {
     private lateinit var apellidoInput: EditText
     private lateinit var emailInput: EditText
     private lateinit var passwordInput: EditText
-    private lateinit var rolSpinner: Spinner
-    private lateinit var delegacionSpinner: Spinner
     private lateinit var activoSwitch: Switch
 
-    private var id: Int? = null
-    private var roles: List<Role> = emptyList()
-    private var delegaciones: List<Delegation> = emptyList()
+    private lateinit var bd: BdLocal
+    private var original: UsuarioLocal? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,63 +43,46 @@ class UsuarioForm : ActividadBase() {
         apellidoInput = findViewById(R.id.formUsuarioApellido)
         emailInput = findViewById(R.id.formUsuarioEmail)
         passwordInput = findViewById(R.id.formUsuarioPassword)
-        rolSpinner = findViewById(R.id.formUsuarioRol)
-        delegacionSpinner = findViewById(R.id.formUsuarioDelegacion)
         activoSwitch = findViewById(R.id.formUsuarioActivo)
 
-        id = intent.getIntExtra("id", 0).takeIf { it > 0 }
+        // El rol y la delegación no son parte de esta pantalla.
+        findViewById<Spinner>(R.id.formUsuarioRol).visibility = View.GONE
+        findViewById<Spinner>(R.id.formUsuarioDelegacion).visibility = View.GONE
 
-        if (id != null) {
+        bd = BdLocal(this)
+        original = intent.getStringExtra("idLocal")?.let { bd.buscar(it) }
+
+        val anterior = original
+        if (anterior == null) {
+            title.text = "Nuevo usuario"
+        } else {
             title.text = "Editar usuario"
-            nombreInput.setText(intent.getStringExtra("first_name").orEmpty())
-            apellidoInput.setText(intent.getStringExtra("last_name").orEmpty())
-            emailInput.setText(intent.getStringExtra("email").orEmpty())
-            activoSwitch.isChecked = intent.getBooleanExtra("active", true)
+            passwordInput.visibility = View.GONE
+            nombreInput.setText(anterior.nombre)
+            apellidoInput.setText(anterior.apellido)
+            emailInput.setText(anterior.email)
+            activoSwitch.isChecked = anterior.activo
         }
 
         btnBack.setOnClickListener { finish() }
-        btnSave.setOnClickListener { guardar() }
-        cargarCatalogos()
+        btnSave.setOnClickListener { validarYGuardar() }
     }
 
-    private fun cargarCatalogos() {
-        lifecycleScope.launch {
-            try {
-                roles = Api.service.roles().results
-                delegaciones = Api.service.delegations().results
-
-                rolSpinner.adapter = ArrayAdapter(
-                    this@UsuarioForm,
-                    android.R.layout.simple_spinner_dropdown_item,
-                    roles.map { it.name },
-                )
-                delegacionSpinner.adapter = ArrayAdapter(
-                    this@UsuarioForm,
-                    android.R.layout.simple_spinner_dropdown_item,
-                    delegaciones.map { it.name },
-                )
-
-                roles.indexOfFirst { it.id == intent.getIntExtra("role", 0) }
-                    .takeIf { it >= 0 }
-                    ?.let(rolSpinner::setSelection)
-                delegaciones.indexOfFirst { it.id == intent.getIntExtra("delegation", 0) }
-                    .takeIf { it >= 0 }
-                    ?.let(delegacionSpinner::setSelection)
-            } catch (e: Exception) {
-                if (irALoginSiExpiro()) return@launch
-                aviso("Sin conexión", "No se pudieron cargar roles y delegaciones.")
-            }
-        }
+    override fun onDestroy() {
+        super.onDestroy()
+        bd.close()
     }
 
-    private fun guardar() {
+    private fun validarYGuardar() {
         nombreInput.error = null
         apellidoInput.error = null
         emailInput.error = null
+        passwordInput.error = null
 
         val nombre = nombreInput.text.toString().trim()
         val apellido = apellidoInput.text.toString().trim()
         val email = emailInput.text.toString().trim()
+        val password = passwordInput.text.toString()
 
         when {
             !Patrones.nombreValido(nombre) -> {
@@ -118,48 +100,47 @@ class UsuarioForm : ActividadBase() {
                 emailInput.requestFocus()
             }
 
-            roles.isEmpty() || delegaciones.isEmpty() -> {
-                aviso("Faltan datos", "No se cargaron roles o delegaciones.")
+            original == null && password.length < LARGO_MINIMO -> {
+                passwordInput.error = "Mínimo $LARGO_MINIMO caracteres"
+                passwordInput.requestFocus()
             }
 
-            else -> enviar(
-                User(
-                    id = id,
-                    email = email,
-                    firstName = nombre,
-                    lastName = apellido,
-                    role = roles[rolSpinner.selectedItemPosition].id,
-                    delegation = delegaciones[delegacionSpinner.selectedItemPosition].id,
-                    active = activoSwitch.isChecked,
-                    // Vacío = no cambiar la contraseña (Gson no manda los nulos).
-                    password = passwordInput.text.toString().ifEmpty { null },
-                )
-            )
+            else -> guardar(nombre, apellido, email, password)
         }
     }
 
-    private fun enviar(usuario: User) {
-        val dialogo = dialogoProgreso("Guardando...")
-        lifecycleScope.launch {
-            try {
-                if (id != null) {
-                    Api.service.updateUser(id!!, usuario)
-                } else {
-                    Api.service.createUser(usuario)
-                }
-                dialogo.terminar(
-                    SweetAlertDialog.SUCCESS_TYPE,
-                    "Guardado",
-                    "El usuario quedó registrado.",
-                ) { finish() }
-            } catch (e: Exception) {
-                if (irALoginSiExpiro()) return@launch
-                dialogo.terminar(
-                    SweetAlertDialog.ERROR_TYPE,
-                    tituloDeError(e),
-                    textoDeError(e, "El servidor rechazó los datos."),
-                )
+    private fun guardar(nombre: String, apellido: String, email: String, password: String) {
+        val anterior = original
+        val usuario = UsuarioLocal(
+            idLocal = anterior?.idLocal ?: UUID.randomUUID().toString(),
+            idRemoto = anterior?.idRemoto,
+            nombre = nombre,
+            apellido = apellido,
+            email = email,
+            password = if (anterior == null) password else anterior.password,
+            activo = activoSwitch.isChecked,
+            estado = when {
+                anterior == null -> UsuarioLocal.PENDIENTE_CREAR
+                // Si todavía no había llegado al servidor, sigue siendo un alta.
+                anterior.estado == UsuarioLocal.PENDIENTE_CREAR -> UsuarioLocal.PENDIENTE_CREAR
+                else -> UsuarioLocal.PENDIENTE_EDITAR
+            },
+            actualizado = System.currentTimeMillis(),
+        )
+        bd.guardar(usuario)
+
+        SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
+            .setTitleText("Guardado")
+            .setContentText("Quedó en el teléfono; se sube a MySQL cuando haya conexión.")
+            .setConfirmText("Aceptar")
+            .setConfirmClickListener {
+                it.dismissWithAnimation()
+                finish()
             }
-        }
+            .show()
+    }
+
+    private companion object {
+        const val LARGO_MINIMO = 8
     }
 }
