@@ -88,7 +88,7 @@ class MainActivity : ActividadBase() {
                     SweetAlertDialog.ERROR_TYPE,
                     "No se pudo iniciar sesión",
                     if (e.code() == 401) {
-                        "Correo o contraseña incorrectos."
+                        "Correo o contraseña incorrectos, o la cuenta está bloqueada."
                     } else {
                         "El servidor respondió ${e.code()}."
                     },
