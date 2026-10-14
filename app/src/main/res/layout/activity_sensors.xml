@@ -73,16 +73,30 @@
 
     </LinearLayout>
 
+    <!-- Linterna y ampolleta, una al lado de la otra -->
     <ImageView
         android:id="@+id/imgNoti"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginTop="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        android:layout_marginEnd="32dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toStartOf="@+id/imgAmpolleta"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardLuz"
         app:srcCompat="@drawable/flashlightoff" />
+
+    <ImageView
+        android:id="@+id/imgAmpolleta"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="40dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imgNoti"
+        app:layout_constraintTop_toBottomOf="@+id/cardLuz"
+        app:srcCompat="@drawable/bulboff" />
 
     <LinearLayout
         android:id="@+id/cardLuz"
@@ -116,7 +130,7 @@
             android:layout_width="85dp"
             android:layout_height="103dp"
             android:layout_weight="1"
-            app:srcCompat="@drawable/bulboff" />
+            app:srcCompat="@drawable/uv" />
 
     </LinearLayout>
 

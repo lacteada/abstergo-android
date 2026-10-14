@@ -38,7 +38,6 @@ class Sensors : ActividadBase() {
     private lateinit var imagenTemp: ImageView
     private lateinit var imgLinterna: ImageView
     private lateinit var imgAmpolleta: ImageView
-    private lateinit var txtAmpolleta: TextView
     private lateinit var btnBack: Button
 
     private val cliente = OkHttpClient()
@@ -78,8 +77,7 @@ class Sensors : ActividadBase() {
         txtHumedad = findViewById(R.id.txt_humedad)
         imagenTemp = findViewById(R.id.imagen_temp)
         imgLinterna = findViewById(R.id.imgNoti)
-        imgAmpolleta = findViewById(R.id.imageView9)
-        txtAmpolleta = findViewById(R.id.txtUVVal)
+        imgAmpolleta = findViewById(R.id.imgAmpolleta)
         btnBack = findViewById(R.id.btnbacksensors)
 
         imgLinterna.setImageResource(R.drawable.flashlightoff)
@@ -185,7 +183,6 @@ class Sensors : ActividadBase() {
         imgAmpolleta.setImageResource(
             if (ampolletaEncendida) R.drawable.bulbon else R.drawable.bulboff
         )
-        txtAmpolleta.text = if (ampolletaEncendida) "Ampolleta encendida" else "Ampolleta apagada"
     }
 
     private companion object {
