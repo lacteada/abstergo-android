@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
-            android:text="Sebastian Gilberto Munoz"
+            android:text="Sebastian Gilberto"
             android:textColor="#CCD3D3D3"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:fontFamily="sans-serif-smallcaps"
-            android:text="Rol: Mock-up Geass"
+            android:text="Rol: Full-stack"
             android:textColor="#80D3D3D3"
             android:textSize="14sp" />
 
@@ -74,7 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:fontFamily="sans-serif-smallcaps"
-            android:text="Ing. Ciberseguridad | INACAP | P1-C1"
+            android:text="Ing. Ciberseguridad | INACAP La Serena | P1-C1"
             android:textColor="#80D3D3D3"
             android:textSize="14sp" />
 

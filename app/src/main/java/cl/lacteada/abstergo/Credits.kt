@@ -30,10 +30,10 @@ class Credits : ActividadBase() {
     }
 
     private companion object {
-        const val NOMBRE = "Nombre Apellido"
-        const val ROL = "Backend"
-        const val CORREO = "correo@inacapmail.cl"
-        const val CARRERA = "INACAP · Analista Programador · Sección 1"
+        const val NOMBRE = "Sebastian Gilberto"
+        const val ROL = "Rol: Full-stack"
+        const val CORREO = "Mail: sebastian.gilberto02@inacapmail.cl"
+        const val CARRERA = "Ing. Ciberseguridad | INACAP La Serena | P1-C1"
         const val GITHUB = "https://github.com/lacteada"
     }
 }
