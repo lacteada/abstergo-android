@@ -34,9 +34,7 @@ data class RegisterRequest(
 // ------------------------------------------------------------------ Comunes
 data class Page<T>(val count: Int, val results: List<T>)
 
-// ----------------------------------------------------------------- Entidades
-data class Role(val id: Int, val code: String?, val name: String, val description: String?)
-
+// ---------------------------------------------------------------- Usuarios
 data class User(
     val id: Int? = null,
     val email: String? = null,
@@ -65,46 +63,4 @@ data class Profile(
     @SerializedName("role_code") val roleCode: String? = null,
     @SerializedName("read_modules") val readModules: List<String> = emptyList(),
     @SerializedName("write_modules") val writeModules: List<String> = emptyList(),
-)
-
-data class Delegation(
-    val id: Int = 0,
-    val code: String = "",
-    val name: String,
-    val address: String = "",
-    val commune: String = "",
-    val manager: Int? = null,
-)
-
-data class AttentionType(val id: Int, val name: String, val description: String? = null)
-
-data class AttentionSubtype(
-    val id: Int,
-    val name: String,
-    @SerializedName("attention_type") val attentionType: Int,
-)
-
-data class Neighbor(
-    val id: Int? = null,
-    val name: String,
-    val rut: String,
-    val address: String = "",
-    val phone: String = "",
-    val territory: Int,
-    @SerializedName("management_type") val managementType: String = "",
-    val status: String = "Activo",
-)
-
-data class Attention(
-    val id: Int? = null,
-    val neighbor: Int,
-    @SerializedName("attention_type") val attentionType: Int,
-    @SerializedName("attention_subtype") val attentionSubtype: Int? = null,
-    val delegation: Int,
-    val staff: Int,
-    val date: String? = null,
-    val reason: String,
-    val detail: String = "",
-    val status: String = "ingresada",
-    val channel: String = "",
 )

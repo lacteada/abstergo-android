@@ -40,19 +40,6 @@ interface ApiService {
     @POST("api/v1/auth/new-password/")
     suspend fun newPassword(@Body body: NewPasswordRequest): Message
 
-    // ------------------------------------------------------------ Catálogos
-    @GET("api/v1/roles/")
-    suspend fun roles(): Page<Role>
-
-    @GET("api/v1/delegations/")
-    suspend fun delegations(): Page<Delegation>
-
-    @GET("api/v1/attention-types/")
-    suspend fun attentionTypes(): Page<AttentionType>
-
-    @GET("api/v1/attention-subtypes/")
-    suspend fun attentionSubtypes(): Page<AttentionSubtype>
-
     // ------------------------------------------------------------- Usuarios
     @GET("api/v1/users/")
     suspend fun users(): Page<User>
@@ -65,30 +52,4 @@ interface ApiService {
 
     @DELETE("api/v1/users/{id}/")
     suspend fun deleteUser(@Path("id") id: Int)
-
-    // -------------------------------------------------------------- Vecinos
-    @GET("api/v1/neighbors/")
-    suspend fun neighbors(): Page<Neighbor>
-
-    @POST("api/v1/neighbors/")
-    suspend fun createNeighbor(@Body body: Neighbor): Neighbor
-
-    @PATCH("api/v1/neighbors/{id}/")
-    suspend fun updateNeighbor(@Path("id") id: Int, @Body body: Neighbor): Neighbor
-
-    @DELETE("api/v1/neighbors/{id}/")
-    suspend fun deleteNeighbor(@Path("id") id: Int)
-
-    // ------------------------------------------------------------ Atenciones
-    @GET("api/v1/cases/")
-    suspend fun cases(): Page<Attention>
-
-    @POST("api/v1/cases/")
-    suspend fun createCase(@Body body: Attention): Attention
-
-    @PATCH("api/v1/cases/{id}/")
-    suspend fun updateCase(@Path("id") id: Int, @Body body: Attention): Attention
-
-    @DELETE("api/v1/cases/{id}/")
-    suspend fun deleteCase(@Path("id") id: Int)
 }
