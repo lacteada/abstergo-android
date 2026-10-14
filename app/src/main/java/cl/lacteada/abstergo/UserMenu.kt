@@ -15,9 +15,9 @@ class UserMenu : ActividadBase() {
         findViewById<TextView>(R.id.user_menu_title).text = "Gestión de Usuarios"
         findViewById<TextView>(R.id.user_menu_title2).text = "Ingresar o listar"
 
-        // "Ingresar usuario" abre el formulario de registro.
+        // "Ingresar usuario" abre el formulario del CRUD (el registro quedó archivado).
         findViewById<Button>(R.id.btn_add_user).setOnClickListener {
-            startActivity(Intent(this, AccountSignup::class.java))
+            startActivity(Intent(this, UsuarioForm::class.java))
         }
         findViewById<Button>(R.id.btn_list_users).setOnClickListener {
             startActivity(Intent(this, UsuarioCrud::class.java))

@@ -3,7 +3,6 @@ package cl.lacteada.abstergo
 import android.content.Intent
 import android.net.ConnectivityManager
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -27,7 +26,6 @@ import kotlinx.coroutines.launch
 class UsuarioCrud : ActividadBase() {
 
     private lateinit var btnBack: Button
-    private lateinit var btnNuevo: Button
     private lateinit var searchInput: EditText
     private lateinit var txtEstado: TextView
     private lateinit var adapter: ListaAdapter<UsuarioLocal>
@@ -41,7 +39,6 @@ class UsuarioCrud : ActividadBase() {
         setContentView(R.layout.activity_usuarios)
 
         btnBack = findViewById(R.id.btnbackusuarios)
-        btnNuevo = findViewById(R.id.btnnuevousuario)
         searchInput = findViewById(R.id.searchInputUsuarios)
         txtEstado = findViewById(R.id.txtEstadoSync)
 
@@ -59,10 +56,7 @@ class UsuarioCrud : ActividadBase() {
             adapter = this@UsuarioCrud.adapter
         }
 
-        if (!Permisos.puedeEscribir("users")) btnNuevo.visibility = View.GONE
-
         btnBack.setOnClickListener { finish() }
-        btnNuevo.setOnClickListener { startActivity(Intent(this, UsuarioForm::class.java)) }
         searchInput.addTextChangedListener(filtro { filtrar(it) })
 
         // Al volver Internet, se sincroniza solo.

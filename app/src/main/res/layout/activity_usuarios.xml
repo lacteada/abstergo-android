@@ -35,21 +35,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnbackusuarios" />
 
-    <Button
-        android:id="@+id/btnnuevousuario"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:backgroundTint="#26960000"
-        android:fontFamily="sans-serif"
-        android:text="+ Nuevo usuario"
-        android:textColor="#CCD3D3D3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleusuarios"
-        app:strokeColor="#80397676"
-        app:strokeWidth="1sp" />
-
     <EditText
         android:id="@+id/searchInputUsuarios"
         android:layout_width="match_parent"
@@ -68,7 +53,7 @@
         android:textColorHint="#80D3D3D3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnnuevousuario" />
+        app:layout_constraintTop_toBottomOf="@+id/titleusuarios" />
 
     <TextView
         android:id="@+id/txtEstadoSync"

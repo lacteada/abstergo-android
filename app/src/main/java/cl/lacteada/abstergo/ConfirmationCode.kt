@@ -6,6 +6,7 @@ import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.KeyEvent
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -74,6 +75,22 @@ class ConfirmationCode : ActividadBase() {
                     }
                 }
             })
+
+            // Retroceso en un campo vacío: borra el anterior y vuelve a él,
+            // así se puede borrar el código completo sin tocar campo por campo.
+            campo.setOnKeyListener { _, tecla, evento ->
+                if (tecla == KeyEvent.KEYCODE_DEL &&
+                    evento.action == KeyEvent.ACTION_DOWN &&
+                    campo.text.isEmpty() &&
+                    indice > 0
+                ) {
+                    digits[indice - 1].setText("")
+                    digits[indice - 1].requestFocus()
+                    true
+                } else {
+                    false
+                }
+            }
         }
 
         iniciarContador()

@@ -9,9 +9,9 @@
 
     <ImageView
         android:id="@+id/imageView5"
-        android:layout_width="259dp"
-        android:layout_height="195dp"
-        android:layout_marginTop="40dp"
+        android:layout_width="200dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -34,9 +34,9 @@
         android:id="@+id/titleconfirmation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="24dp"
         android:fontFamily="sans-serif-black"
-        android:text="Verificacion"
+        android:text="Verificación"
         android:textAlignment="center"
         android:textColor="#A8A6A6"
         android:textSize="34sp"
@@ -44,30 +44,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
-    <Button
-        android:id="@+id/btnverifycode"
+    <TextView
+        android:id="@+id/subtitleconfirmation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="80dp"
-        android:backgroundTint="#26960000"
+        android:layout_marginTop="8dp"
         android:fontFamily="sans-serif"
-        android:text="Verificar"
-        android:textColor="#CCD3D3D3"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="Revise su correo electrónico"
+        android:textAlignment="center"
+        android:textColor="#80D3D3D3"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:strokeColor="#80397676" />
+        app:layout_constraintTop_toBottomOf="@+id/titleconfirmation" />
 
     <LinearLayout
         android:id="@+id/codeContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
+        android:layout_marginTop="32dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/btnverifycode"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/subtitleconfirmation">
 
         <EditText
             android:id="@+id/digit1"
@@ -148,20 +147,6 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/subtitleconfirmation"
-        android:layout_width="127dp"
-        android:layout_height="21dp"
-        android:layout_marginBottom="16dp"
-        android:fontFamily="sans-serif"
-        android:text="Revise su correo"
-        android:textColor="#80D3D3D3"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/codeContainer"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.14"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <LinearLayout
         android:id="@+id/filaContador"
         android:layout_width="wrap_content"
@@ -194,5 +179,22 @@
             android:textSize="14sp"
             app:strokeColor="#80397676" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btnverifycode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="#26960000"
+        android:fontFamily="sans-serif"
+        android:paddingStart="40dp"
+        android:paddingEnd="40dp"
+        android:text="Verificar"
+        android:textColor="#CCD3D3D3"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/filaContador"
+        app:strokeColor="#80397676" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
