@@ -162,4 +162,37 @@
         app:layout_constraintHorizontal_bias="0.14"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <LinearLayout
+        android:id="@+id/filaContador"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/codeContainer">
+
+        <TextView
+            android:id="@+id/txtContador"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:fontFamily="monospace"
+            android:text="El código vence en 60s"
+            android:textColor="#80D3D3D3"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btnReenviar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#26960000"
+            android:enabled="false"
+            android:text="Reenviar"
+            android:textColor="#CCD3D3D3"
+            android:textSize="14sp"
+            app:strokeColor="#80397676" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

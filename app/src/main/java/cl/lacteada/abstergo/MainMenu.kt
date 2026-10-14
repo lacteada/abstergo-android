@@ -2,7 +2,6 @@ package cl.lacteada.abstergo
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
@@ -13,9 +12,9 @@ import kotlinx.coroutines.launch
 class MainMenu : ActividadBase() {
 
     private lateinit var menuTitle: TextView
-    private lateinit var btnNeighbors: Button
-    private lateinit var btnCases: Button
-    private lateinit var btnUsers: Button
+    private lateinit var btnGestion: Button
+    private lateinit var btnSensores: Button
+    private lateinit var btnCreditos: Button
     private lateinit var btnLogout: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,26 +22,19 @@ class MainMenu : ActividadBase() {
         setContentView(R.layout.activity_main_menu)
 
         menuTitle = findViewById(R.id.menu_title)
-        btnNeighbors = findViewById(R.id.btn_vecinos)
-        btnCases = findViewById(R.id.btn_atenciones)
-        btnUsers = findViewById(R.id.btn_usuarios)
+        btnGestion = findViewById(R.id.btn_gestion)
+        btnSensores = findViewById(R.id.btn_sensores)
+        btnCreditos = findViewById(R.id.btn_creditos)
         btnLogout = findViewById(R.id.btn_logout)
 
-        menuTitle.text = "Bienvenid@"
-
-        // Los módulos aparecen recién cuando llega el perfil del usuario.
-        btnNeighbors.visibility = View.GONE
-        btnCases.visibility = View.GONE
-        btnUsers.visibility = View.GONE
-
-        btnNeighbors.setOnClickListener {
-            startActivity(Intent(this, VecinoCrud::class.java))
+        btnGestion.setOnClickListener {
+            startActivity(Intent(this, UserMenu::class.java))
         }
-        btnCases.setOnClickListener {
-            startActivity(Intent(this, AtencionCrud::class.java))
+        btnSensores.setOnClickListener {
+            startActivity(Intent(this, Sensors::class.java))
         }
-        btnUsers.setOnClickListener {
-            startActivity(Intent(this, UsuarioCrud::class.java))
+        btnCreditos.setOnClickListener {
+            startActivity(Intent(this, Credits::class.java))
         }
         btnLogout.setOnClickListener { cerrarSesion() }
     }
@@ -59,18 +51,12 @@ class MainMenu : ActividadBase() {
                 val perfil = Api.service.me()
                 Api.perfil = perfil
                 menuTitle.text = "Bienvenid@ · ${perfil.roleCode ?: "sin rol"}"
-                btnNeighbors.visibility = mostrar(Permisos.puedeLeer("neighbors"))
-                btnCases.visibility = mostrar(Permisos.puedeLeer("cases"))
-                btnUsers.visibility = mostrar(Permisos.puedeLeer("users"))
             } catch (e: Exception) {
                 if (irALoginSiExpiro()) return@launch
-                // Sin perfil no se ofrece ningún módulo: queda cerrar sesión.
-                menuTitle.text = "No se pudo cargar el perfil"
+                menuTitle.text = "Menú Principal"
             }
         }
     }
-
-    private fun mostrar(si: Boolean) = if (si) View.VISIBLE else View.GONE
 
     private fun cerrarSesion() {
         val refresh = Api.sesion.refresh

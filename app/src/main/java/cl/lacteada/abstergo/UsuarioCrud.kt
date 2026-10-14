@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cl.lacteada.abstergo.data.Api
 import cl.lacteada.abstergo.data.User
+import cl.lacteada.abstergo.dominio.sinAcentos
 import cn.pedant.SweetAlert.SweetAlertDialog
 import kotlinx.coroutines.launch
 
@@ -68,12 +69,13 @@ class UsuarioCrud : ActividadBase() {
     }
 
     private fun filtrar(consulta: String) {
-        val texto = consulta.trim().lowercase()
+        // Sin distinguir mayúsculas ni acentos, como pide la pauta.
+        val texto = sinAcentos(consulta.trim())
         val visibles = if (texto.isEmpty()) {
             usuarios
         } else {
             usuarios.filter {
-                "${it.firstName} ${it.lastName}".lowercase().contains(texto) ||
+                sinAcentos("${it.firstName} ${it.lastName}").contains(texto) ||
                     (it.email ?: "").lowercase().contains(texto)
             }
         }

@@ -31,6 +31,9 @@ interface ApiService {
     @POST("api/v1/auth/recover/")
     suspend fun recover(@Body body: RecoverRequest): Message
 
+    @POST("api/v1/auth/register/")
+    suspend fun register(@Body body: RegisterRequest): User
+
     @POST("api/v1/auth/verify/")
     suspend fun verify(@Body body: VerifyRequest): Message
 

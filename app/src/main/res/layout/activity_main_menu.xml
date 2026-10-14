@@ -14,9 +14,6 @@
         android:layout_height="153dp"
         android:layout_marginTop="40dp"
         android:cropToPadding="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo" />
 
     <TextView
@@ -32,39 +29,39 @@
         android:textSize="34sp" />
 
     <Button
-        android:id="@+id/btn_vecinos"
-        android:layout_width="180sp"
+        android:id="@+id/btn_gestion"
+        android:layout_width="220sp"
         android:layout_height="54dp"
         android:layout_marginBottom="16dp"
         android:backgroundTint="#26960000"
         android:fontFamily="sans-serif"
-        android:text="Vecinos"
+        android:text="CRUD de Usuarios"
         android:textColor="#CCD3D3D3"
         android:textSize="18sp"
         app:strokeColor="#80397676"
         app:strokeWidth="1sp" />
 
     <Button
-        android:id="@+id/btn_atenciones"
-        android:layout_width="180sp"
+        android:id="@+id/btn_sensores"
+        android:layout_width="220sp"
         android:layout_height="54dp"
         android:layout_marginBottom="16dp"
         android:backgroundTint="#26960000"
         android:fontFamily="sans-serif"
-        android:text="Atenciones"
+        android:text="Ver datos de sensores"
         android:textColor="#CCD3D3D3"
         android:textSize="18sp"
         app:strokeColor="#80397676"
         app:strokeWidth="1sp" />
 
     <Button
-        android:id="@+id/btn_usuarios"
-        android:layout_width="180sp"
+        android:id="@+id/btn_creditos"
+        android:layout_width="220sp"
         android:layout_height="54dp"
         android:layout_marginBottom="16dp"
         android:backgroundTint="#26960000"
         android:fontFamily="sans-serif"
-        android:text="Usuarios"
+        android:text="Datos del desarrollador"
         android:textColor="#CCD3D3D3"
         android:textSize="18sp"
         app:strokeColor="#80397676"
@@ -72,7 +69,7 @@
 
     <Button
         android:id="@+id/btn_logout"
-        android:layout_width="180sp"
+        android:layout_width="220sp"
         android:layout_height="54dp"
         android:layout_marginBottom="16dp"
         android:backgroundTint="#26960000"

@@ -103,13 +103,13 @@ class UsuarioForm : ActividadBase() {
         val email = emailInput.text.toString().trim()
 
         when {
-            nombre.length < 2 -> {
-                nombreInput.error = "Mínimo 2 caracteres"
+            !Patrones.nombreValido(nombre) -> {
+                nombreInput.error = "Solo letras y espacios"
                 nombreInput.requestFocus()
             }
 
-            apellido.length < 2 -> {
-                apellidoInput.error = "Mínimo 2 caracteres"
+            !Patrones.nombreValido(apellido) -> {
+                apellidoInput.error = "Solo letras y espacios"
                 apellidoInput.requestFocus()
             }
 

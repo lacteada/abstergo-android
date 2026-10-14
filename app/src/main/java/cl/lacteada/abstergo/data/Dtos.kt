@@ -24,6 +24,13 @@ data class VerifyRequest(val email: String, val code: String)
 
 data class NewPasswordRequest(val email: String, val code: String, val password: String)
 
+/** El alta pública: el correo es el identificador. */
+data class RegisterRequest(
+    val email: String,
+    val password: String,
+    @SerializedName("first_name") val firstName: String = "",
+)
+
 // ------------------------------------------------------------------ Comunes
 data class Page<T>(val count: Int, val results: List<T>)
 
