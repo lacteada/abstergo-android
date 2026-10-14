@@ -10,8 +10,8 @@
 
     <ImageView
         android:id="@+id/imageView12"
-        android:layout_width="293dp"
-        android:layout_height="153dp"
+        android:layout_width="240dp"
+        android:layout_height="126dp"
         android:layout_marginTop="40dp"
         android:cropToPadding="false"
         app:srcCompat="@drawable/logo" />
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="40dp"
         android:fontFamily="sans-serif-black"
-        android:paddingTop="40sp"
+        android:paddingTop="32dp"
         android:text="Menú Principal"
         android:textAlignment="center"
         android:textColor="#CCD3D3D3"
@@ -30,11 +30,14 @@
 
     <Button
         android:id="@+id/btn_gestion"
-        android:layout_width="220sp"
-        android:layout_height="54dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:backgroundTint="#26960000"
         android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:paddingTop="18dp"
+        android:paddingBottom="18dp"
         android:text="CRUD de Usuarios"
         android:textColor="#CCD3D3D3"
         android:textSize="18sp"
@@ -43,11 +46,14 @@
 
     <Button
         android:id="@+id/btn_sensores"
-        android:layout_width="220sp"
-        android:layout_height="54dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:backgroundTint="#26960000"
         android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:paddingTop="18dp"
+        android:paddingBottom="18dp"
         android:text="Ver datos de sensores"
         android:textColor="#CCD3D3D3"
         android:textSize="18sp"
@@ -56,28 +62,37 @@
 
     <Button
         android:id="@+id/btn_creditos"
-        android:layout_width="220sp"
-        android:layout_height="54dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:backgroundTint="#26960000"
         android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:paddingTop="18dp"
+        android:paddingBottom="18dp"
         android:text="Datos del desarrollador"
         android:textColor="#CCD3D3D3"
         android:textSize="18sp"
         app:strokeColor="#80397676"
         app:strokeWidth="1sp" />
 
+    <!-- Empuja "Cerrar sesión" al fondo, como el botón del login. -->
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
     <Button
         android:id="@+id/btn_logout"
-        android:layout_width="220sp"
-        android:layout_height="54dp"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="#26960000"
-        android:fontFamily="sans-serif"
-        android:text="Cerrar sesión"
-        android:textColor="#CCD3D3D3"
-        android:textSize="18sp"
-        app:strokeColor="#80397676"
-        app:strokeWidth="1sp" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:backgroundTint="#00FFFFFF"
+        android:fontFamily="sans-serif-smallcaps"
+        android:paddingTop="14dp"
+        android:paddingBottom="14dp"
+        android:text="CERRAR SESIÓN"
+        android:textColor="#80D3D3D3"
+        android:textSize="14sp" />
 
 </LinearLayout>
